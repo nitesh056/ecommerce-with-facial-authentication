@@ -18,7 +18,7 @@ from services.errors import EntityDoesNotExist
 
 router = APIRouter()
 
-@router.post("/", name="auth:home")
+@router.get("/", name="auth:home")
 async def home():
     return {"home": "page"}
 

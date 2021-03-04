@@ -4,13 +4,34 @@ body {
     font-family: sans-serif;
 }
 
+.m-0 {
+    margin: 0;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.bg-black {
+    background-color: #000;
+    color: #ccc;
+}
+
+a {
+    color: #ccc;
+}
+
+a:hover {
+    font-weight: bolder;
+    color: #fff;
+}
+
 .auth-form {
     padding: 40px;
     background: #191919;
     text-align: center;
     transition: 0.25s;
     margin-top: 100px;
-
     box-shadow: 10px 10px 19px 6px rgba(0,0,0,0.75) ;
     -webkit-box-shadow: 10px 10px 19px 6px rgba(0,0,0,0.75) ;
     -moz-box-shadow: 10px 10px 19px 6px rgba(0,0,0,0.75) ;
@@ -62,5 +83,6 @@ body {
 }
 
 .auth-form input[type="submit"]:hover {
+    width: 150px;
     background: #2ecc71
 }

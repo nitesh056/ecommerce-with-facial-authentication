@@ -4,14 +4,14 @@ services:
   auth-service:
     build: ./auth-service
     volumes:
-      - ./auth-service:/usr/src/app/auth-service
+      - ./auth-service:/usr/src/app
     ports:
       - "8000:8000"
 
   api-gateway:
     build: ./api-gateway
     volumes:
-      - ./api-gateway:/usr/src/app/api-gateway
+      - ./api-gateway:/usr/src/app
     ports:
       - "5000:5000"
     depends_on:

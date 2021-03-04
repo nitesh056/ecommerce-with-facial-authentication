@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 
-from api.routes.api import router as api_router
+from routes.api import router as api_router
 from tortoise.contrib.fastapi import register_tortoise
 
 def get_application() -> FastAPI:

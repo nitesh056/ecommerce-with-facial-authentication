@@ -1,32 +1,19 @@
-from flask import Flask, render_template, request
-import requests
+from flask import Flask
 
-app = Flask(__name__)
+from routes.auth import auth_router
+from routes.index import index_router
 
-@app.route('/', methods=['POST', 'GET'])
-def index():
-    if request.method == 'POST':
+def get_application():
+    application = Flask(__name__)
 
-        payload = {
-            'user': {
-                'email': request.form['email'],
-                'password': request.form['password']
-            }
-        }
+    application.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
+    
+    application.register_blueprint(index_router)
+    application.register_blueprint(auth_router)
 
-        r = requests.post('http://auth-service:8000/api/u/login', json=payload)
+    return application
 
-        result = r.json()
-        if r.status_code == requests.codes.ok:
-            return result['token']
-        else:
-            return result['detail']
-            return render_template('index.html', payload={
-                "email": request.form['email']
-            })
-
-    if request.method == 'GET':
-        return render_template('index.html')
+app = get_application()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
