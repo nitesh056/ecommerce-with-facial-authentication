@@ -20,5 +20,12 @@
     {% include 'include/navbar.html' %}
 
     {% block body %}{% endblock %}
+    
+    <!-- Vendor js -->
+    <script src="{{ url_for('static', filename='js/vendor/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vendor/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Custom js -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
