@@ -1,5 +1,7 @@
 # API STATUS MESSAGES
 
+USER_NOT_FOUND_IN_DATABASE = "user not found in database"
+
 INCORRECT_LOGIN_INPUT_1 = "incorrect email"
 INCORRECT_LOGIN_INPUT_2 = "incorrect password"
 

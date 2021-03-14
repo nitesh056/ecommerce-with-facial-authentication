@@ -1,4 +1,4 @@
-from models.domain.user import User
+from models.domain.user import User, User_List_Pydantic
 from services.errors import EntityDoesNotExist
 from passlib.hash import bcrypt
 
@@ -30,3 +30,9 @@ async def create_user(user_create):
     user_obj = User(**user_create.dict())
     await user_obj.save()
     return user_obj
+
+async def get_all_users():
+    user_row = await User_List_Pydantic.from_queryset(User.all())
+    if user_row:
+        return user_row
+    raise EntityDoesNotExist()

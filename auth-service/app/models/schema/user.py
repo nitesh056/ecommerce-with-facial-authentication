@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import List
 
 
 class UserInLogin(BaseModel):
@@ -14,6 +15,10 @@ class UserInfo(BaseModel):
     role_id: int
     status: str
     
+
+class ResponseUserList(BaseModel):
+    users: List[UserInfo]
+
 
 class UserWithToken(BaseModel):
     user: UserInfo

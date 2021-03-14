@@ -2,8 +2,8 @@ from fastapi import APIRouter, Body, Depends, HTTPException, status
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from core import config
 
-from models.domain.user import UserIn_Pydantic, User_Pydantic
-from models.schema.user import UserInLogin, UserWithToken
+from models.domain.user import UserIn_Pydantic, User_Pydantic, User_List_Pydantic, User
+from models.schema.user import UserInLogin, UserWithToken, ResponseUserList
 from resources import strings
 from services.jwt import create_access_token_for_user
 from services.user import (
@@ -12,15 +12,25 @@ from services.user import (
     check_email_is_taken,
     create_user,
     hash_password,
-    verify_password
+    verify_password,
+    get_all_users
 )
 from services.errors import EntityDoesNotExist
 
 router = APIRouter()
 
-@router.get("/", name="auth:home")
-async def home():
-    return {"home": "page"}
+@router.get("/", name="auth:getAll")
+async def getAll():
+    try:
+        all_users = await get_all_users()
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.USER_NOT_FOUND_IN_DATABASE,
+        )
+
+    return ResponseUserList(users=all_users.dict()['__root__'])
+
 
 @router.post("/login", name="auth:login")
 async def login(

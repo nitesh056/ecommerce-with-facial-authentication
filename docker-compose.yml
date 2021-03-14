@@ -8,11 +8,16 @@ services:
     ports:
       - "8000:8000"
 
+  product-service:
+    build: ./product-service
+    volumes:
+      - ./product-service:/usr/src/app
+    ports:
+      - "8001:8000"
+
   api-gateway:
     build: ./api-gateway
     volumes:
       - ./api-gateway:/usr/src/app
     ports:
       - "5000:5000"
-    depends_on:
-      - auth-service
