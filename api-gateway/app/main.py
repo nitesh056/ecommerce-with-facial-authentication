@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 
 from routes.auth import auth_router
 from routes.index import index_router
@@ -16,4 +17,8 @@ def get_application():
 app = get_application()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(
+        host=os.environ.get("HOST", "127.0.0.1"),
+        port=os.environ.get("PORT", 5000),
+        debug=os.environ.get("DEBUG", True)
+        )

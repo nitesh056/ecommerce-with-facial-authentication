@@ -21,6 +21,8 @@
 
     {% block body %}{% endblock %}
     
+    {% include 'include/footer.html' %}
+
     <!-- Vendor js -->
     <script src="{{ url_for('static', filename='js/vendor/jquery-3.2.1.slim.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vendor/bootstrap.bundle.min.js') }}"></script>

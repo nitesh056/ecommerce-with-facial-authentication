@@ -1,11 +1,14 @@
-import requests
+import requests, os
+
+URL_PREFIX = '/api'
 
 
-def get(path):
-    r = requests.get('http://127.0.0.1:8000/api'+path)
+def get(url, path):
+    r = requests.get(os.environ.get(url) + URL_PREFIX + path)
     return r.json(), r.status_code == requests.codes.ok
     
 
-def post(path, payload):
-    r = requests.post('http://127.0.0.1:8000/api'+path, json=payload)
+def post(url, path, payload):
+    r = requests.post(os.environ.get(url) + URL_PREFIX + path, json=payload)
     return r.json(), r.status_code == requests.codes.ok
+    

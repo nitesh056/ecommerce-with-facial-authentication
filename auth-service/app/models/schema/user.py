@@ -12,7 +12,7 @@ class UserInfo(BaseModel):
     name: str
     email: EmailStr
     phone_number: int
-    role_id: int
+    role: str
     status: str
     
 

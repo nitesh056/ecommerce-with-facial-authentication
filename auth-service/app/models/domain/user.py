@@ -7,6 +7,11 @@ class Status(str, Enum):
     ACTIVE = "active"
     INACTIVE = "inactive"
 
+class Role(str, Enum):
+    ADMIN = "admin"
+    STAFF = "staff"
+    USER = "user"
+
 class User(models.Model):
     id = fields.IntField(pk=True)
     username = fields.CharField(50, unique=True)
@@ -14,7 +19,7 @@ class User(models.Model):
     email = fields.CharField(50, unique=True)
     password = fields.CharField(128)
     phone_number = fields.BigIntField(pk=False)
-    role_id = fields.IntField(pk=False)
+    role = fields.CharEnumField(Role, default=Role.USER)
     status = fields.CharEnumField(Status, default=Status.ACTIVE)
 
 User_Pydantic = pydantic_model_creator(User, name='User')

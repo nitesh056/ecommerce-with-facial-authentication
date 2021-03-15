@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, make_response
+from flask import Blueprint, request, render_template, make_response, redirect
 import requests
 
 from services.requests import get, post
@@ -11,7 +11,7 @@ auth_router = Blueprint('auth', __name__, url_prefix='/u')
 def login():
     if request.method == 'POST':
 
-        response, status_success = post('/u/login', {
+        response, status_success = post('AUTH_URL', '/u/login', {
             'user': {
                 'email': request.form['email'],
                 'password': request.form['password']
@@ -19,7 +19,7 @@ def login():
         })
         
         if status_success:
-            resp = make_response(render_template('index.html'))
+            resp = make_response(redirect('/'))
             resp.set_cookie('token', response['token'])
             return resp
         else:
@@ -36,7 +36,7 @@ def login():
 def signup():
     if request.method == 'POST':
 
-        response, status_success = post('/u/register', {
+        response, status_success = post('AUTH_URL', '/u/register', {
             'user': {
                 'username': request.form['username'],
                 'name': request.form['name'],
