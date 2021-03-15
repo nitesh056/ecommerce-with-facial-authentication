@@ -10,6 +10,7 @@ from services.product import (
     get_all_products,
     get_all_active_products,
     check_productname_is_taken,
+    get_all_gaming_laptop_products,
     get_all_desktop_products,
     get_all_new_arrival_products
 )
@@ -64,13 +65,10 @@ async def create(
     return ResponseProductWithBrand(product=product.dict())
 
 
-@router.get("/desktop", name="product:Desktop")
-async def getAllDesktop():
-    print("ksjdfkj")
+@router.get("/gaming-laptop", name="product:Gaming Laptop")
+async def getAllGamingLaptop():
     try:
-        print("desktop")
-        all_products = await get_all_desktop_products()
-        print(all_products)
+        all_products = await get_all_gaming_laptop_products()
     except:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -78,6 +76,19 @@ async def getAllDesktop():
         )
 
     return ResponseProductList(products=all_products.dict()['__root__'])
+
+@router.get("/desktop", name="product:Desktop")
+async def getAllDesktop():
+    try:
+        all_products = await get_all_desktop_products()
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.PRODUCT_NOT_FOUND_IN_DATABASE,
+        )
+
+    return ResponseProductList(products=all_products.dict()['__root__'])
+
 
 @router.get("/new-arrival", name="product:New Arrival")
 async def getAllNewArrival():

@@ -36,6 +36,14 @@ async def check_productname_is_taken(name: str):
         return True
     return False
 
+async def get_all_gaming_laptop_products():
+    product_row = await Product_List_Pydantic.from_queryset(
+        Product.filter(is_gaming_laptop=1,status="active").select_related('brand')
+    )
+    if product_row:
+        return product_row
+    raise EntityDoesNotExist()
+
 async def get_all_desktop_products():
     product_row = await Product_List_Pydantic.from_queryset(
         Product.filter(is_desktop=1,status="active").select_related('brand')
