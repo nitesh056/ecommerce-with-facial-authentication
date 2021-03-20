@@ -43,7 +43,7 @@ def signup():
                 'email': request.form['email'],
                 'password': request.form['password'],
                 'phone_number': request.form['phone_number'],
-                'role_id': 0,
+                'role_id': "user",
                 'status': "active"
             }
         })
