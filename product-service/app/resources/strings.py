@@ -9,3 +9,5 @@ BRAND_NOT_FOUND_IN_DATABASE = "brand not found in database"
 ERROR_IN_SAVING_BRAND = "error in saving brand"
 BRAND_NAME_TAKEN = "brand name already taken"
 
+CART_NOT_FOUND_IN_DATABASE = "cart empty"
+ERROR_IN_SAVING_CART = "error in saving cart"

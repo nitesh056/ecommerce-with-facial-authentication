@@ -19,7 +19,10 @@ register_tortoise(
     modules={
         'models': [
             'models.domain.brand',
-            'models.domain.product'
+            'models.domain.product',
+            'models.domain.cart',
+            'models.domain.cartItem',
+            'models.domain.checkout'
         ]
     },
     generate_schemas=True,
