@@ -1,0 +1,36 @@
+<ul class="top-cart-row">
+    <div class="top-cart-row-container">
+        <div class="top-cart-holder dropdown animate-dropdown">
+            <div class="basket" id="cart-dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">    
+                    <div class="basket-item-count">
+                        <!-- <span class="count">10</span> -->
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    
+                    <div class="total-price-basket">
+                        <span class="total-price">
+                            <span class="sign">NPR </span>
+                            <span class="value">{{cart.grand_total}}</span>
+                        </span>
+                    </div>
+                </a>
+
+                <ul class="dropdown-menu">
+                    <div id="navCartItems">
+                        {% include 'cart/nav-cart-items.html' %}
+                    </div>
+                    <li class="checkout">
+                        <div class="basket-item">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <a href="checkout.html" class="le-button">Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</ul>

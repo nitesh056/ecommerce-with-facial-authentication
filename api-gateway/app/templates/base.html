@@ -20,16 +20,21 @@
     {% include 'include/navbar.html' %}
 
     {% block body %}{% endblock %}
-    
+
+    {% include 'include/toast.html' %}
+
     {% include 'include/footer.html' %}
 
     <!-- Vendor js -->
-    <script src="{{ url_for('static', filename='js/vendor/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vendor/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vendor/list.min.js') }}"></script>
 
     <!-- Custom js -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/product-filter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/nav-ajax.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/cart-item.js') }}"></script>
+
+    {% block customJavaScripts %}{% endblock %}
 </body>
 </html>

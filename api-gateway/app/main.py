@@ -4,6 +4,7 @@ import os
 from routes.auth import auth_router
 from routes.index import index_router
 from routes.admin import admin_router
+from routes.cart import cart_router
 
 def get_application():
     application = Flask(__name__)
@@ -13,6 +14,7 @@ def get_application():
     application.register_blueprint(index_router)
     application.register_blueprint(auth_router)
     application.register_blueprint(admin_router)
+    application.register_blueprint(cart_router)
 
     return application
 

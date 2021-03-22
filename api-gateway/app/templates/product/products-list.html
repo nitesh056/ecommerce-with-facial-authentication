@@ -24,3 +24,7 @@
     </div>
 </div>
 {% endblock %}
+
+{% block customJavaScripts %}
+    <script src="{{ url_for('static', filename='js/product-filter.js') }}"></script>
+{% endblock %}

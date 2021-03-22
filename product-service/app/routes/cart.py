@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException, status
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
-from models.schema.cart import ResponseCartList, ResponseCart, AddCartItemRequest
+from models.schema.cart import ResponseCartList, ResponseCart, AddCartItemRequest, ResponseCartWithCartItems
 from models.schema.schemas import CartIn_Pydantic, Cart_Pydantic
 from resources import strings
 from services.cart import (
@@ -44,17 +44,17 @@ async def create(
     return ResponseCart(cart=cart.dict())
 
 
-@router.get("/{cart_id}", name="cart:Get Specific")
-async def getSpecific(cart_id):
+@router.get("/{user_id}", name="cart:Get Specific")
+async def getSpecific(user_id):
     try:
-        cart = await get_cart(cart_id)
+        cart = await get_cart(user_id)
     except:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=strings.CART_NOT_FOUND_IN_DATABASE,
         )
 
-    return ResponseCart(cart=cart.dict())
+    return ResponseCartWithCartItems(**cart.dict())
 
 
 @router.post("/add-cart-item", name="cart:Add Item In Cart")
@@ -71,7 +71,7 @@ async def addItemInCart(addCartItemReqest: AddCartItemRequest):
 
     cart = await edit_cart(cart.id, cart.grand_total + cartItem.product.current_price)
 
-    return ResponseCart(cart=cart.dict())
+    return ResponseCartWithCartItems(**cart.dict())
 
 
 @router.post("/remove-cart-item", name="cart:Remove Item In Cart")
@@ -88,4 +88,4 @@ async def removeItemInCart(addCartItemReqest: AddCartItemRequest):
 
     cart = await edit_cart(cart.id, cartItem.quantity * cartItem.product.current_price)
 
-    return ResponseCart(cart=cart.dict())
+    return ResponseCartWithCartItems(**cart.dict())

@@ -1,0 +1,19 @@
+{% for item in cartItems %}
+<li>
+    <div class="basket-item">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 no-margin text-center">
+                <div class="thumb">
+                    <img alt="" src="/assets/images/products/cartimage.png" />
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-8">
+                <div class="title">{{item.product.name}}</div>
+                <div>Qty: {{item.quantity}}</div>
+                <div class="price">Rs. {{item.product.current_price * item.quantity}}</div>
+            </div>
+        </div>
+        <a class="close-btn" href="#">x</a>
+    </div>
+</li>
+{% endfor %}

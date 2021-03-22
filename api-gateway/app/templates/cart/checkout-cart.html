@@ -1,0 +1,9 @@
+<ul class="list-group mb-3">
+    <div id="checkoutCartItems">
+        {% include 'cart/checkout-cart-items.html' %}
+    </div>
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Total (NPR)</span>
+        <strong>{{cart.grand_total}}</strong>
+    </li>
+</ul>

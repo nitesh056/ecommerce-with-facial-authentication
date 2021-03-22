@@ -58,8 +58,3 @@ class CartInfo(BaseModel):
     user_id: int
     grand_total: int
     status: str
-
-
-class CartItemInfo(BaseModel):
-    id: int
-    quantity: int

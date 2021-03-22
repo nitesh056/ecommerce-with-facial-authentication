@@ -5,9 +5,9 @@ from flask import Blueprint, request, render_template
 admin_router = Blueprint('admin', __name__, url_prefix='/admin')
 
 
-@admin_router.router('/')
+@admin_router.route('/')
 def getDashboard():
-    return render_template('admin/layout-fixed-sidebar.html')
+    return render_template('admin/ui-icons.html')
     
 @admin_router.route('/<template>')
 def route_template(template):

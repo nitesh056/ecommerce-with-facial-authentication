@@ -9,8 +9,8 @@ async def create_cart(cart_create):
     await cart.save()
     return await Cart_Pydantic.from_tortoise_orm(cart)
 
-async def get_cart(id: int):
-    cart = await Cart.get_or_none(id=id)
+async def get_cart(user_id: int):
+    cart = await Cart.get_or_none(user_id=user_id, status='saved').prefetch_related('cart_items')
     if cart:
         return await Cart_Pydantic.from_tortoise_orm(cart)
     raise EntityDoesNotExist()
@@ -23,13 +23,13 @@ async def get_all_carts():
         return cart_row
     raise EntityDoesNotExist()
 
-async def get_specific_user_cart(user_id):
+async def get_specific_user_cart(user_id: int):
     cart_row = await Cart.get_or_none(user_id=user_id, status='saved')
     if cart_row:
         return await Cart_Pydantic.from_tortoise_orm(cart_row)
     raise EntityDoesNotExist()
 
-async def edit_cart(id, grand_total):
+async def edit_cart(id: int, grand_total: int):
     to_update_row = await Cart.get_or_none(id=id)
     if to_update_row:
         to_update_row.grand_total = grand_total
@@ -37,7 +37,7 @@ async def edit_cart(id, grand_total):
         return await Cart_Pydantic.from_tortoise_orm(to_update_row)
     raise EntityDoesNotExist()
 
-async def edit_quantity_in_cart(cart_id, product_id, quantity):
+async def edit_quantity_in_cart(cart_id: int, product_id: int, quantity: int):
     cart_item_row = await CartItem.get_or_none(cart_id=cart_id, product_id=product_id)
     if cart_item_row:
         cart_item_row.quantity = cart_item_row.quantity + quantity

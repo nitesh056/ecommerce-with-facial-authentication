@@ -30,6 +30,15 @@ a:hover {
     padding-left: 0;
 }
 
+.toast-fixed {
+    display: none;
+    position: fixed;
+    top: 25%;
+    right: 10px;
+    width: auto;
+    border: 3px solid #73AD21;
+}
+
 .auth-form {
     padding: 40px;
     background: #191919;
@@ -157,4 +166,99 @@ a:hover {
 }
 .pagination>li>a {
     padding: 5px 10px;
+}
+
+.top-cart-row .wishlist-compare-holder {
+    line-height: 24px;
+    margin: 0 18px 0 0;
+    font-size: 13px;
+}
+.top-cart-row .wishlist-compare-holder a {
+    color: #3D3D3D;
+}
+.top-cart-row .wishlist-compare-holder i {
+    transition: 0.3s ease;
+    color: #c6c6c6;
+    margin: 0 10px 0 0px;
+    font-size: 14px;
+}
+.top-cart-row .top-cart-holder {
+    position: relative;
+}
+.top-cart-row .top-cart-holder .checkout a {
+    display: inline-block;
+}
+.top-cart-row .top-cart-holder .dropdown-menu {
+    width: 332px;
+    left: -250px;
+    top: 65px;
+    padding: 16px 0 0 0;
+}
+.top-cart-row .top-cart-holder li {
+    border-bottom: 1px solid #e0e0e0;
+}
+.top-cart-row .top-cart-holder .basket-item {
+    padding: 11px 28px;
+    position: relative;
+}
+.top-cart-row .top-cart-holder .basket-item .thumb {
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+.top-cart-row .top-cart-holder .basket-item .title {
+    font-weight: 100;
+    line-height: 26px;
+}
+.top-cart-row .top-cart-holder .basket-item .close-btn {
+    display: inline-block;
+    position: absolute;
+    right: 8%;
+    top: 41%;
+}
+.top-cart-row .top-cart-holder .basket-item .close-btn:after {
+    color: #3D3D3D;
+    content: '\f00d';
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.top-cart-row .top-cart-holder .basket-item-count {
+    position: relative;
+}
+.top-cart-row .top-cart-holder .basket-item-count .count {
+    position: absolute;
+    color: #fff;
+    background-color: #444;
+    top: 2px;
+    left: 30px;
+    border-radius: 100px;
+    width: 21px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.top-cart-row .top-cart-holder .dropdown-toggle {
+    display: block;
+    padding: 0;
+}
+.top-cart-row .top-cart-holder .dropdown-toggle .lbl {
+    font-size: 14px;
+    line-height: 21px;
+    color: #3D3D3D;
+    display: block;
+}
+.top-cart-row .top-cart-holder .dropdown-toggle .total-price {
+    font-size: 22px;
+    font-weight: bold;
+}
+.top-cart-row .top-cart-holder .dropdown-toggle:after {
+    display: none;
+}
+.top-cart-row .top-cart-holder .total-price-basket {
+    margin: 0 0 0 5px;
 }
