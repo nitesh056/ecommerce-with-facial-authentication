@@ -13,7 +13,7 @@
                 <div class="price">Rs. {{item.product.current_price * item.quantity}}</div>
             </div>
         </div>
-        <a class="close-btn" href="#">x</a>
+        <span><i class="fas fa-minus close-btn" onclick="removeInCart('{{item.product.id}}')"></i></span>
     </div>
 </li>
 {% endfor %}

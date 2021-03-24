@@ -215,15 +215,9 @@ a:hover {
     right: 8%;
     top: 41%;
 }
-.top-cart-row .top-cart-holder .basket-item .close-btn:after {
-    color: #3D3D3D;
-    content: '\f00d';
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+.top-cart-row .top-cart-holder .basket-item .close-btn:hover {
+    color: #999;
+    cursor: pointer;
 }
 .top-cart-row .top-cart-holder .basket-item-count {
     position: relative;

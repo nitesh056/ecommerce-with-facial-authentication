@@ -9,6 +9,8 @@ from routes.cart import cart_router
 def get_application():
     application = Flask(__name__)
 
+    application.secret_key = 'asjdfkjaskdjfkj'
+
     application.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
     
     application.register_blueprint(index_router)

@@ -1,11 +1,12 @@
 from tortoise import Tortoise
 from tortoise.contrib.pydantic import pydantic_model_creator, pydantic_queryset_creator
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 from models.domain.brand import Brand
 from models.domain.product import Product
 from models.domain.cart import Cart
 from models.domain.cartItem import CartItem
+from models.domain.checkout import Checkout
 
 
 Tortoise.init_models([
@@ -30,6 +31,10 @@ CartIn_Pydantic = pydantic_model_creator(Cart, name='CartIn', exclude_readonly=T
 
 Cart_Item_Pydantic = pydantic_model_creator(CartItem, name='CartItem')
 Cart_Item_List_Pydantic = pydantic_queryset_creator(CartItem)
+
+Checkout_Pydantic = pydantic_model_creator(Checkout, name='Checkout')
+Checkout_List_Pydantic = pydantic_queryset_creator(Checkout)
+CheckoutIn_Pydantic = pydantic_model_creator(Checkout, name='CheckoutIn', exclude_readonly=True)
 
 
 class BrandInfo(BaseModel):
@@ -58,3 +63,13 @@ class CartInfo(BaseModel):
     user_id: int
     grand_total: int
     status: str
+
+class CheckoutInfo(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    address: str
+    phone_no: str
+    status: str
+    remarks: str
+

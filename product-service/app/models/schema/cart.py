@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 
 from models.domain.cart import Cart
-from models.schema.schemas import BrandInfo, ProductInfo, CartInfo
+from models.schema.schemas import BrandInfo, ProductInfo, CartInfo, CheckoutInfo
 
 
 class CartItemInfo(BaseModel):
@@ -22,3 +22,7 @@ class ResponseCartWithCartItems(CartInfo):
 class AddCartItemRequest(BaseModel):
     user_id: int
     product_id: int
+
+
+class ResponseCheckout(BaseModel):
+    checkout: CheckoutInfo

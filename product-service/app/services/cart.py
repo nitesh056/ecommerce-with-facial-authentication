@@ -37,16 +37,23 @@ async def edit_cart(id: int, grand_total: int):
         return await Cart_Pydantic.from_tortoise_orm(to_update_row)
     raise EntityDoesNotExist()
 
+async def edit_cart_status(id: int, status: str):
+    to_update_row = await Cart.get_or_none(id=id)
+    if to_update_row:
+        to_update_row.status = status
+        await to_update_row.save()
+        return await Cart_Pydantic.from_tortoise_orm(to_update_row)
+    raise EntityDoesNotExist()
+
 async def edit_quantity_in_cart(cart_id: int, product_id: int, quantity: int):
     cart_item_row = await CartItem.get_or_none(cart_id=cart_id, product_id=product_id)
     if cart_item_row:
         cart_item_row.quantity = cart_item_row.quantity + quantity
     else:
         cart_item_row = CartItem(quantity=1, cart_id=cart_id, product_id=product_id)
-    # if cart_item_row.quantity <= 0:
-    #     await cart_item_row.delete()
-    #     return ""
-    # else:
+    if cart_item_row.quantity <= 0:
+        await cart_item_row.delete()
+        return ""
     await cart_item_row.save()
     return await Cart_Item_Pydantic.from_tortoise_orm(cart_item_row)
 

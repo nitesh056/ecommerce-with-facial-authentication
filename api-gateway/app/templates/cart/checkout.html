@@ -14,17 +14,17 @@
 
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Checkout details</h4>
-            <form>
+            <form method="POST">
                 <div class="mb-3">
-                    <label for="name">name</label>
-                    <input type="text" name="remarks"name class="form-control" id="name" />
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" id="name" />
                     <div class="invalid-feedback">
                         Please enter name.
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="email">email</label>
+                    <label for="email">E-mail</label>
                     <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" />
                     <div class="invalid-feedback">
                         Please enter a valid email address.
@@ -54,6 +54,8 @@
                         Please enter a valid remarks.
                     </div>
                 </div>
+
+                <input type="text" name="cart_id" value="{{cart.id}}" hidden>
 
                 <hr class="mb-4" />
                 <button class="btn btn-primary btn-lg btn-block" type="submit">

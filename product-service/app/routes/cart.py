@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Body, HTTPException, status
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
-from models.schema.cart import ResponseCartList, ResponseCart, AddCartItemRequest, ResponseCartWithCartItems
-from models.schema.schemas import CartIn_Pydantic, Cart_Pydantic
+from models.schema.cart import ResponseCartList, ResponseCart, AddCartItemRequest, ResponseCartWithCartItems, ResponseCheckout
+from models.schema.schemas import CartIn_Pydantic, CheckoutIn_Pydantic
 from resources import strings
 from services.cart import (
     create_cart,
@@ -10,7 +10,12 @@ from services.cart import (
     get_all_carts,
     get_specific_user_cart,
     edit_cart,
-    edit_quantity_in_cart
+    edit_quantity_in_cart,
+    edit_cart_status
+)
+from services.checkout import (
+    create_checkout,
+    # get_checkout,
 )
 from services.errors import EntityDoesNotExist
 
@@ -89,3 +94,20 @@ async def removeItemInCart(addCartItemReqest: AddCartItemRequest):
     cart = await edit_cart(cart.id, cartItem.quantity * cartItem.product.current_price)
 
     return ResponseCartWithCartItems(**cart.dict())
+    
+
+@router.post("/checkout", name="cart:Checkout")
+async def checkout(
+    checkout_create: CheckoutIn_Pydantic = Body(..., embed=True, alias="checkout")
+):
+    try:
+        checkout = await create_checkout(checkout_create)
+
+        cart = await edit_cart_status(checkout_create.cart_id, 'awaiting')
+    except Exception as e:
+        HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=strings.ERROR_IN_SAVING_CART,
+        )
+
+    return ResponseCheckout(checkout=checkout.dict())

@@ -11,3 +11,5 @@ BRAND_NAME_TAKEN = "brand name already taken"
 
 CART_NOT_FOUND_IN_DATABASE = "cart empty"
 ERROR_IN_SAVING_CART = "error in saving cart"
+
+ERROR_IN_SAVING_CHECKOUT = "error in saving checkout"
