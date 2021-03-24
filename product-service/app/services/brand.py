@@ -19,9 +19,8 @@ async def check_brandname_is_taken(name: str):
         return True
     return False
 
-async def get_brand(brand_id):
-    brand = await Brand.get_or_none(id=brand_id).prefetch_related('products')
-    print(brand)
+async def get_brand(brand_name):
+    brand = await Brand.get_or_none(name=brand_name).prefetch_related('products')
     if brand:
         return await Brand_Pydantic.from_tortoise_orm(brand)
     raise EntityDoesNotExist()

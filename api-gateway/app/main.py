@@ -9,7 +9,7 @@ from routes.cart import cart_router
 def get_application():
     application = Flask(__name__)
 
-    application.secret_key = 'asjdfkjaskdjfkj'
+    application.secret_key = os.environ.get("SECRET_KEY", "hh&H*hf7&#(3usudo#*isduf")
 
     application.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
     

@@ -7,3 +7,13 @@ $(function () {
         }
     });
 });
+
+$(function () {
+    $.ajax({
+        url: "/list-brand",
+        type: "GET",
+        success: function(resp){
+            $("#brandList").append(resp);
+        }
+    });
+});

@@ -49,14 +49,14 @@ async def create(
     return ResponseBrand(brand=brand)
 
 
-@router.get("/{brand_id}", name="brand:Get Specific")
-async def getSpecific(brand_id):
-    # try:
-    brand = await get_brand(brand_id)
-    # except:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_404_NOT_FOUND,
-    #         detail=strings.PRODUCT_NOT_FOUND_IN_DATABASE,
-    #     )
+@router.get("/{brand_name}", name="brand:Get Specific")
+async def getSpecific(brand_name):
+    try:
+        brand = await get_brand(brand_name)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.PRODUCT_NOT_FOUND_IN_DATABASE,
+        )
 
     return ResponseBrandWithAllProducts(brand=brand)

@@ -25,3 +25,13 @@ def showDesktop():
 def showNewArrival():
     response, status_success = get('PRODUCT_URL', '/product/new-arrival')
     return render_template('product/products-list.html', products=response['products'])
+
+@index_router.route('/list-brand')
+def showBrand():
+    response, status_success = get('PRODUCT_URL', '/brand')
+    return render_template('product/brand-list.html', brands=response['brands'])
+
+@index_router.route('/search-by-brand/<brand_name>')
+def showProductsByBrand(brand_name):
+    response, status_success = get('PRODUCT_URL', '/brand/'+brand_name)
+    return render_template('product/products-list.html', products=response['brand']['products'])
