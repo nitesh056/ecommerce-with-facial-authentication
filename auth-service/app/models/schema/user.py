@@ -8,6 +8,7 @@ class UserInLogin(BaseModel):
     
 
 class UserInfo(BaseModel):
+    id: int
     username: str
     name: str
     email: EmailStr
@@ -15,10 +16,11 @@ class UserInfo(BaseModel):
     role: str
     status: str
     
+class ResponseUser(BaseModel):
+    user: UserInfo
 
 class ResponseUserList(BaseModel):
     users: List[UserInfo]
-
 
 class UserWithToken(BaseModel):
     user: UserInfo

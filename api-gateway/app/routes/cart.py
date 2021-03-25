@@ -1,33 +1,51 @@
-from flask import Blueprint, request, render_template, flash, redirect
-import requests
+from flask import Blueprint, request, render_template, Response, flash, redirect, g
 
+from middlewares.auth import get_user_info_middleware, check_auth_middleware
 from services.requests import get, post
 
 
 cart_router = Blueprint('cart', __name__, url_prefix='/cart')
 
 @cart_router.route('/')
+@get_user_info_middleware
 def get_cart_item():
-    response, status_success = get('PRODUCT_URL', '/cart/1') # need to make this (1) dynamic from user_id
-    return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
+    status_success = False
+    print(g.user)
+    if g.user is not None:
+        print(g.user)
+        response, status_success = get('PRODUCT_URL', '/cart/'+ str(g.user['id']))
+    
+    if status_success:
+        return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
+    else:
+        return "Cart empty"
+        
 
 @cart_router.route('/add-to-cart/<product_id>', methods=['GET'])
+@get_user_info_middleware
 def add_to_cart(product_id):
-    response, status_success = post('PRODUCT_URL', '/cart/add-cart-item', {
-        'user_id': 1,
-        'product_id': product_id,
-    }) # need to make this (1) dynamic from user_id
-    return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
+    if g.user is not None:
+        response, status_success = post('PRODUCT_URL', '/cart/add-cart-item', {
+            'user_id': str(g.user['id']),
+            'product_id': product_id,
+        })
+        return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
+    return Response("Login to add to cart", status=401)
+
 
 @cart_router.route('/remove-in-cart/<product_id>', methods=['GET'])
+@get_user_info_middleware
 def remove_in_cart(product_id):
-    response, status_success = post('PRODUCT_URL', '/cart/remove-cart-item', {
-        'user_id': 1,
-        'product_id': product_id,
-    }) # need to make this (1) dynamic from user_id
-    return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
+    if g.user is not None:
+        response, status_success = post('PRODUCT_URL', '/cart/remove-cart-item', {
+            'user_id': str(g.user['id']),
+            'product_id': product_id,
+        })
+        return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
+    return "Login to add to cart"
 
 @cart_router.route('/checkout', methods=['GET', 'POST'])
+@check_auth_middleware
 def showCheckout():
     if request.method == 'POST':
         response, status_success = post('PRODUCT_URL', '/cart/checkout', {
@@ -46,17 +64,10 @@ def showCheckout():
             flash("Your order has been saved", "info")
             return redirect("/")
         else:
-            print(response)
             return response
-            # return render_template('auth/signup.html', payload={
-            #     "username": request.form['username'],
-            #     "name": request.form['name'],
-            #     "email": request.form['email'],
-            #     "phone_number": request.form['phone_number'],
-            #     "auth_error_message": response['detail']
-            # })
+            
     if request.method == 'GET':
-        response, status_success = get('PRODUCT_URL', '/cart/1') # need to make this (1) dynamic from user_id
+        response, status_success = get('PRODUCT_URL', '/cart/' + str(g.user['id']))
         if status_success:
             
             return render_template('cart/checkout.html', cart=response, cartItems=response['cart_items'])

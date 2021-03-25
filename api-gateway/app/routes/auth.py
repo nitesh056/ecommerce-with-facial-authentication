@@ -1,6 +1,7 @@
-from flask import Blueprint, request, render_template, make_response, redirect
+from flask import Blueprint, request, render_template, make_response, redirect, g
 import requests
 
+from middlewares.auth import no_auth_middleware, get_user_info_middleware
 from services.requests import get, post
 
 
@@ -8,6 +9,7 @@ auth_router = Blueprint('auth', __name__, url_prefix='/u')
 
 
 @auth_router.route('/login', methods=['POST', 'GET'])
+@no_auth_middleware
 def login():
     if request.method == 'POST':
 
@@ -33,6 +35,7 @@ def login():
 
 
 @auth_router.route('/signup', methods=['POST', 'GET'])
+@no_auth_middleware
 def signup():
     if request.method == 'POST':
 
@@ -63,3 +66,17 @@ def signup():
 
     if request.method == 'GET':
         return render_template('auth/signup.html')
+
+
+@auth_router.route('/check_auth', methods=['GET'])
+@get_user_info_middleware
+def checkAuth():
+    print(g.user)
+    return render_template('auth/nav-auth.html', user=g.user)
+
+
+@auth_router.route('/logout', methods=['GET'])
+def logout():
+    resp = make_response(redirect('/'))
+    resp.set_cookie('token', '')
+    return resp

@@ -8,6 +8,12 @@ async def get_user_by_email(email: str):
         return user_row
     raise EntityDoesNotExist()
 
+async def get_user_by_id(id: int):
+    user_row = await User.get_or_none(id=id)
+    if user_row:
+        return user_row
+    raise EntityDoesNotExist()
+
 async def check_username_is_taken(username: str):
     user_row = await User.get_or_none(username=username)
     if user_row:

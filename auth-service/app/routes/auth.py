@@ -1,13 +1,16 @@
 from fastapi import APIRouter, Body, Depends, HTTPException, status
-from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED
 from core import config
 
 from models.domain.user import UserIn_Pydantic, User_Pydantic, User_List_Pydantic, User
-from models.schema.user import UserInLogin, UserWithToken, ResponseUserList
+from models.schema.user import UserInLogin, UserWithToken, ResponseUserList, ResponseUser
+from models.schema.jwt import JWTToken
 from resources import strings
-from services.jwt import create_access_token_for_user
+from services.jwt import create_access_token_for_user, get_user_id_from_token
+import jwt
 from services.user import (
     get_user_by_email,
+    get_user_by_id,
     check_username_is_taken,
     check_email_is_taken,
     create_user,
@@ -78,7 +81,7 @@ async def register(
         user_obj = await create_user(user_create)
         user = await User_Pydantic.from_tortoise_orm(user_obj)
     except Exception as e:
-        HTTPException(
+        raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=strings.ERROR_IN_SIGNUP,
         )
@@ -86,3 +89,24 @@ async def register(
     token = await create_access_token_for_user(user, "JWT_SECRET")
 
     return UserWithToken(user=user, token=token)
+
+@router.post("/token", name="auth:token")
+async def getUserByToken(
+    token: str = Body(..., embed=True, alias="token")
+):
+    try:
+        user_obj = await get_user_by_id(await get_user_id_from_token(token, "JWT_SECRET"))
+
+        user = await User_Pydantic.from_tortoise_orm(user_obj)
+    except ValueError as decode_error:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="decode_error",
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=strings.ERROR_IN_FETCHING_USER,
+        )
+
+    return ResponseUser(user=user)

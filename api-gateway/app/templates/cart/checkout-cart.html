@@ -1,6 +1,14 @@
 <ul class="list-group mb-3">
     <div id="checkoutCartItems">
-        {% include 'cart/checkout-cart-items.html' %}
+        {% for item in cartItems %}
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+                <h6 class="my-0">{{item.product.name}}</h6>
+                <small class="text-muted">Qty: {{item.quantity}}</small>
+            </div>
+            <span class="text-muted">Rs. {{item.product.current_price * item.quantity}}</span>
+        </li>
+        {% endfor %}
     </div>
     <li class="list-group-item d-flex justify-content-between">
         <span>Total (NPR)</span>

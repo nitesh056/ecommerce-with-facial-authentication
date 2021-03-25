@@ -1,0 +1,7 @@
+{% if user %}
+<li class="nav-item">{{ user.username }}</li>
+<li class="nav-item"><a href="/u/logout" class="nav-link p-0 px-2">Logout</a></li>
+{% else %}
+<li class="nav-item"><a href="/u/signup" class="nav-link p-0 px-2">Sign Up</a></li>
+<li class="nav-item"><a href="/u/login" class="nav-link p-0 px-2">Login</a></li>
+{% endif %}
