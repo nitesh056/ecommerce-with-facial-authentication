@@ -2,7 +2,7 @@ from fastapi import APIRouter, Body, HTTPException, status
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 from models.schema.product import ResponseProductList, ResponseProduct, ProductInfoWithBrand, ProductInfo, ResponseProductWithBrand
-from models.schema.schemas import ProductIn_Pydantic, Product_Pydantic
+from models.schema.schemas import ProductIn_Pydantic, Product_Pydantic, ProductInfo
 from resources import strings
 from services.product import (
     create_product,
@@ -12,7 +12,9 @@ from services.product import (
     check_productname_is_taken,
     get_all_gaming_laptop_products,
     get_all_desktop_products,
-    get_all_new_arrival_products
+    get_all_new_arrival_products,
+    edit_product,
+    delete_product
 )
 from services.errors import EntityDoesNotExist
 
@@ -114,3 +116,32 @@ async def getSpecific(product_id):
         )
 
     return ProductInfoWithBrand(**product.dict())
+
+
+@router.put("/{product_id}", name="product:Edit")
+async def edit(
+    product_id,
+    product_edit: ProductIn_Pydantic = Body(..., embed=True, alias="product")
+):
+    try:
+        product = await edit_product(product_id, product_edit)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.ERROR_WHILE_EDITING_PRODUCT,
+        )
+
+    return ProductInfoWithBrand(**product.dict())
+
+
+@router.delete("/{product_id}", name="product:Delete")
+async def delete(product_id):
+    try:
+        await delete_product(product_id)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.ERROR_WHILE_DELETING_PRODUCT,
+        )
+
+    return "Deleted Successfully"

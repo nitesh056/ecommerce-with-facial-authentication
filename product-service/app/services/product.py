@@ -59,3 +59,13 @@ async def get_all_new_arrival_products():
     if product_row:
         return product_row
     raise EntityDoesNotExist()
+
+async def edit_product(product_id, product_edit):
+    product = await Product.get_or_none(id=product_id)
+    updated_product = product.update_from_dict(data=product_edit.dict())
+    await updated_product.save()
+    return await Product_Pydantic.from_tortoise_orm(updated_product)
+
+async def delete_product(product_id):
+    product = await Product.get_or_none(id=product_id)
+    await product.delete()

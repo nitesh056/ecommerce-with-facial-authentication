@@ -1,0 +1,108 @@
+{% extends "admin/admin-base.html" %}
+
+{% block title %} Edit Product {% endblock %} 
+
+{% block content %}  
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Edit Product</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <!-- form start -->
+              <form method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="name">Product Name:</label>
+                    <input type="text" class="form-control" name="name" value="{{product.name}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="old_price">Old Price:</label>
+                    <input type="number" class="form-control" name="old_price" value="{{product.old_price}}">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="old_price">Current Price:</label>
+                    <input type="number" class="form-control" name="current_price" value="{{product.current_price}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="qty">Quantity:</label>
+                    <input type="number" class="form-control" name="qty" value="{{product.qty}}">
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" name="image" id="customFile">
+                      <label class="custom-file-label" for="image">Choose image</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="short_description">Short Description:</label>
+                    <textarea class="form-control" name="short_description" rows="3">{{product.short_description}}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="long_description">Long Description:</label>
+                    <textarea class="textarea" name="long_description" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{product.description}}</textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label>Features:</label>
+                    <textarea class="textarea" name="features" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{product.features}}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" name="is_gaming_laptop" id="is_gaming_laptop" type="checkbox" {{ 'checked' if product.is_gaming_laptop == 1 else '' }}>
+                      <label for="is_gaming_laptop" class="custom-control-label">Gaming Laptop</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" name="is_desktop" id="is_desktop" type="checkbox" {{ 'checked' if product.is_desktop == 1 else '' }}>
+                      <label for="is_desktop" class="custom-control-label">Desktop</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" name="is_new_arrival" id="is_new_arrival" type="checkbox" {{ 'checked' if product.is_new_arrival == 1 else '' }}>
+                      <label for="is_new_arrival" class="custom-control-label">New Arrival</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Brand</label>
+                    <select class="form-control" name="brand_id">
+                      {% for brand in brands %}
+                        <option value="{{brand.id}}" {{ 'selected' if product.brand['id'] == brand.id else '' }}>{{brand.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock content %}

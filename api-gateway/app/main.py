@@ -1,10 +1,7 @@
 from flask import Flask
 import os
 
-from routes.auth import auth_router
-from routes.index import index_router
-from routes.admin import admin_router
-from routes.cart import cart_router
+from routes.routes import register_blueprints
 
 def get_application():
     application = Flask(__name__)
@@ -13,10 +10,7 @@ def get_application():
 
     application.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
     
-    application.register_blueprint(index_router)
-    application.register_blueprint(auth_router)
-    application.register_blueprint(admin_router)
-    application.register_blueprint(cart_router)
+    register_blueprints(application)
 
     return application
 

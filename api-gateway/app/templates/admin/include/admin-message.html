@@ -1,0 +1,13 @@
+<div class="card card-default">
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="card-body">
+        {% for category, message in messages %}
+        <div class="callout callout-{{category}}">
+            <p>{{message}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+</div>

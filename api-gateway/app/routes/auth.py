@@ -46,13 +46,13 @@ def signup():
                 'email': request.form['email'],
                 'password': request.form['password'],
                 'phone_number': request.form['phone_number'],
-                'role_id': "user",
+                'role': "user",
                 'status': "active"
             }
         })
 
         if status_success:
-            resp = make_response(render_template('index.html'))
+            resp = make_response(redirect('/'))
             resp.set_cookie('token', response['token'])
             return resp
         else:

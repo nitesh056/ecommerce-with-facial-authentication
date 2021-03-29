@@ -1,0 +1,6 @@
+images/*
+images/products/*
+
+!images/slides
+!images/products
+!images/products/no-image.png
