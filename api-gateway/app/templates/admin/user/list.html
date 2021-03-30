@@ -1,13 +1,13 @@
 {% extends "admin/admin-base.html" %}
 
-{% block title %} Product List {% endblock %} 
+{% block title %} User List {% endblock %} 
 
 {% block content %}
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Product List</h1>
+            <h1>User List</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -24,28 +24,29 @@
                   <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Old Price</th>
-                    <th>Current Price</th>
-                    <th>Quantity</th>
-                    <th style="width:200px;">Image</th>
-                    <th>Brand</th>
-                    <th>New Arrival</th>
-                    <th>Action</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Role</th>
+                    <!-- <th>Status</th> -->
+                    <th>Change Role</th>
                   </tr>
                   </thead>
                   <tbody>
-                      {% for product in products %}
+                      {% for user in users %}
                         <tr>
-                            <td>{{product.name}}</td>
-                            <td>{{product.old_price}}</td>
-                            <td>{{product.current_price}}</td>
-                            <td>{{product.qty}}</td>
-                            <td><img width="200px" height="100px" src="{{ url_for('static', filename='images/products/'+ product.image) }}" alt=""></td>
-                            <td>{{product.brand.name}}</td>
-                            <td>{{product.is_new_arrival}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.phone_number}}</td>
+                            <td>{{user.role}}</td>
+                            <!-- <td>{{user.status}}</td> -->
                             <td>
-															<a class="btn btn-primary btn-xs" href="/admin/products/edit/{{product.id}}">Edit</a>
-															<a class="btn btn-danger btn-xs" href="/admin/products/delete/{{product.id}}">Delete</a>
+                              {% if user.role == 'user' %}
+                                <a class="btn btn-primary btn-xs" href="/admin/users/{{user.id}}/staff">Staff</a>
+                              {% else %}
+                                <a class="btn btn-primary btn-xs" href="/admin/users/{{user.id}}/user">Normal User</a>
+                              {% endif %}
 														</td>
                         </tr>
                       {% endfor %}

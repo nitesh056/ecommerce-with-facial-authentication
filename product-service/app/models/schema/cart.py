@@ -26,3 +26,11 @@ class AddCartItemRequest(BaseModel):
 
 class ResponseCheckout(BaseModel):
     checkout: CheckoutInfo
+
+
+class CheckoutWithCart(CheckoutInfo):
+    cart: ResponseCartWithCartItems
+
+
+class ResponseCheckoutList(BaseModel):
+    checkouts: List[CheckoutWithCart]

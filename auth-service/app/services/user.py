@@ -42,3 +42,9 @@ async def get_all_users():
     if user_row:
         return user_row
     raise EntityDoesNotExist()
+
+async def change_user_role(user_id, user_edit):
+    user = await User.get_or_none(id=user_id)
+    user.role = user_edit['role']
+    await user.save()
+    return "success"

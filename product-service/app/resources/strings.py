@@ -3,7 +3,8 @@
 PRODUCT_NOT_FOUND_IN_DATABASE = "product not found in database"
 ERROR_IN_SAVING_PRODUCT = "error in saving product"
 PRODUCT_NAME_TAKEN = "product name already taken"
-
+ERROR_WHILE_EDITING_PRODUCT = "error while editing product"
+ERROR_WHILE_DELETING_PRODUCT = "error while deleting product"
 
 BRAND_NOT_FOUND_IN_DATABASE = "brand not found in database"
 ERROR_IN_SAVING_BRAND = "error in saving brand"

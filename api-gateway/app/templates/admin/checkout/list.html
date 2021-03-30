@@ -1,0 +1,69 @@
+{% extends "admin/admin-base.html" %}
+
+{% block title %} Checkout List {% endblock %} 
+
+{% block content %}
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Checkout List</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <table id="admin-datatable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      {% for checkout in checkouts %}
+                        <tr>
+                            <td>{{checkout.name}}</td>
+                            <td>{{checkout.email}}</td>
+                            <td>{{checkout.address}}</td>
+                            <td>{{checkout.phone_no}}</td>
+                            <td>{{checkout.remarks}}</td>
+                            <td>
+                              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#{{checkout.name}}">
+                                Check Cart
+                              </button>
+                              {% if checkout.status == 'pending' %}
+                                <a class="btn btn-primary btn-xs" href="/admin/checkout/accept/{{checkout.id}}">Approve</a>
+                                <a class="btn btn-danger btn-xs" href="/admin/checkout/reject/{{checkout.id}}">Reject</a>
+                              {% else %}
+                                {{checkout.status}}
+                              {% endif %}
+                          </td>
+                        </tr>
+                        {% include 'admin/checkout/cart-item-modal.html' %}
+                      {% endfor %}
+                  </tbody>
+                  </div>
+                  <!-- /.modal -->
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+{% endblock content %}

@@ -1,4 +1,3 @@
-from jinja2 import TemplateNotFound
 from flask import Blueprint, request, render_template, redirect, flash
 from werkzeug.utils import secure_filename
 
@@ -48,7 +47,7 @@ def create():
         })
 
         if status_success:
-            return redirect('/')
+            return redirect('/admin/products')
         else:
             return response
 

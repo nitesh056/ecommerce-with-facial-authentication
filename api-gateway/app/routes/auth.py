@@ -71,7 +71,6 @@ def signup():
 @auth_router.route('/check_auth', methods=['GET'])
 @get_user_info_middleware
 def checkAuth():
-    print(g.user)
     return render_template('auth/nav-auth.html', user=g.user)
 
 

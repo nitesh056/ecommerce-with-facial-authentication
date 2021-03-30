@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException, status
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
-from models.schema.cart import ResponseCartList, ResponseCart, AddCartItemRequest, ResponseCartWithCartItems, ResponseCheckout
+from models.schema.cart import ResponseCartList, ResponseCart, AddCartItemRequest, ResponseCartWithCartItems, ResponseCheckout, CheckoutWithCart, ResponseCheckoutList
 from models.schema.schemas import CartIn_Pydantic, CheckoutIn_Pydantic
 from resources import strings
 from services.cart import (
@@ -15,7 +15,9 @@ from services.cart import (
 )
 from services.checkout import (
     create_checkout,
-    # get_checkout,
+    get_all_checkouts,
+    get_checkout,
+    change_checkout_status
 )
 from services.errors import EntityDoesNotExist
 
@@ -41,25 +43,12 @@ async def create(
     try:
         cart = await create_cart(cart_create)
     except Exception as e:
-        HTTPException(
+        raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=strings.ERROR_IN_SAVING_CART,
         )
 
     return ResponseCart(cart=cart.dict())
-
-
-@router.get("/{user_id}", name="cart:Get Specific")
-async def getSpecific(user_id):
-    try:
-        cart = await get_cart(user_id)
-    except:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=strings.CART_NOT_FOUND_IN_DATABASE,
-        )
-
-    return ResponseCartWithCartItems(**cart.dict())
 
 
 @router.post("/add-cart-item", name="cart:Add Item In Cart")
@@ -96,7 +85,7 @@ async def removeItemInCart(addCartItemReqest: AddCartItemRequest):
     return ResponseCartWithCartItems(**cart.dict())
     
 
-@router.post("/checkout", name="cart:Checkout")
+@router.post("/checkout", name="cart:Add Checkout")
 async def checkout(
     checkout_create: CheckoutIn_Pydantic = Body(..., embed=True, alias="checkout")
 ):
@@ -105,9 +94,66 @@ async def checkout(
 
         cart = await edit_cart_status(checkout_create.cart_id, 'awaiting')
     except Exception as e:
-        HTTPException(
+        raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=strings.ERROR_IN_SAVING_CART,
         )
 
     return ResponseCheckout(checkout=checkout.dict())
+
+
+@router.get("/checkout", name="cart:Get Checkout")
+async def getPendingCheckouts():
+    try:
+        checkouts = await get_all_checkouts()
+        print(checkouts)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=strings.ERROR_IN_SAVING_CART,
+        )
+
+    return ResponseCheckoutList(checkouts=checkouts.dict()['__root__'])
+
+
+@router.get("/checkout/{checkout_id}", name="cart:Get Specific Checkout")
+async def getPendingCheckouts(checkout_id):
+    try:
+        checkout = await get_checkout(checkout_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=strings.ERROR_IN_SAVING_CART,
+        )
+
+    return CheckoutWithCart(**checkout.dict())
+
+
+@router.put("/checkout/{checkout_id}", name="cart:Change Checkout Status")
+async def edit(
+    checkout_id,
+    checkout_edit = Body(..., embed=True, alias="checkout")
+):
+    try:
+        checkout = await change_checkout_status(checkout_id, checkout_edit)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            # detail=strings.ERROR_WHILE_EDITING_PRODUCT,
+            detail="error while editing checkout",
+        )
+
+    return "success"
+
+
+@router.get("/{user_id}", name="cart:Get Specific")
+async def getSpecific(user_id):
+    try:
+        cart = await get_cart(user_id)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.CART_NOT_FOUND_IN_DATABASE,
+        )
+
+    return ResponseCartWithCartItems(**cart.dict())

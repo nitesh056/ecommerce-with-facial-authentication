@@ -1,4 +1,7 @@
 {% if user %}
+{% if user.role in 'admin or staff' %}
+<li class="nav-item"><a href="/admin/users" class="nav-link p-0 px-2">Dashboard</a></li>
+{% endif %}
 <li class="nav-item">{{ user.username }}</li>
 <li class="nav-item"><a href="/u/logout" class="nav-link p-0 px-2">Logout</a></li>
 {% else %}

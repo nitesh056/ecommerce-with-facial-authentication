@@ -23,28 +23,13 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item has-treeview"> <!-- menu-open -->
-            <a href="#" class="nav-link"> <!-- active -->
+          <li class="nav-item">
+            <a href="/admin/users" class="nav-link">
               <i class="fas fa-users"></i>
               <p class="ml-1">
-                Users
-                <i class="right fas fa-angle-left"></i>
+                User List
               </p>
             </a>
-            <ul class="nav nav-treeview ml-4">
-              <li class="nav-item">
-                <a href="/admin/users" class="nav-link">
-                  <i class="fas fa-list-ul"></i>
-                  <p class="ml-1">List Users</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/users/create" class="nav-link">
-                  <i class="fas fa-plus"></i>
-                  <p class="ml-1">Add Users</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item has-treeview {% if 'product' in request.url_rule.endpoint %} menu-open {% endif %}"> <!-- menu-open -->
             <a href="#" class="nav-link"> <!-- active -->
@@ -68,6 +53,14 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/checkout" class="nav-link">
+              <i class="fas fa-cash-register"></i>
+              <p class="ml-1">
+                Checkout List
+              </p>
+            </a>
           </li>
         </ul>
       </nav>
