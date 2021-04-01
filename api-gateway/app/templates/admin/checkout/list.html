@@ -40,7 +40,7 @@
                             <td>{{checkout.phone_no}}</td>
                             <td>{{checkout.remarks}}</td>
                             <td>
-                              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#{{checkout.name}}">
+                              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#checkoutId{{checkout.id}}">
                                 Check Cart
                               </button>
                               {% if checkout.status == 'pending' %}
