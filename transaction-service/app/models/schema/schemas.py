@@ -14,19 +14,23 @@ Tortoise.init_models([
 
 Invoice_Pydantic = pydantic_model_creator(Invoice, name='Invoice')
 Invoice_List_Pydantic = pydantic_queryset_creator(Invoice)
-InvoiceIn_Pydantic = pydantic_model_creator(Invoice, name='InvoiceIn', exclude_readonly=True)
 
 Invoice_Item_Pydantic = pydantic_model_creator(InvoiceItem, name='InvoiceItem')
 Invoice_Item_List_Pydantic = pydantic_queryset_creator(InvoiceItem)
 
 
-class InvoiceInfo(BaseModel):
-    id: int
+class InvoiceIn_Pydantic(BaseModel):
     transaction_type: str
     grand_total: int
-
-class InvoiceItemInfo(BaseModel):
+    
+class InvoiceInfo(InvoiceIn_Pydantic):
     id: int
+
+class Invoice_ItemIn_Pydantic(BaseModel):
     product_id: int
     quantity: int
     rate: int
+
+class InvoiceItemInfo(Invoice_ItemIn_Pydantic):
+    id: int
+    

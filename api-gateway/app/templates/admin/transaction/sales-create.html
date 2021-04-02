@@ -1,0 +1,71 @@
+{% extends "admin/admin-base.html" %}
+
+{% block title %} Sales Transaction {% endblock %} 
+
+{% block content %}  
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Sales Invoice</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <!-- form start -->
+              <form method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="name">Product Name:</label>
+                    <input type="text" class="form-control" name="name">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="old_price">Old Price:</label>
+                    <input type="number" class="form-control" name="old_price">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="old_price">Current Price:</label>
+                    <input type="number" class="form-control" name="current_price">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="qty">Quantity:</label>
+                    <input type="number" class="form-control" name="qty">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Brand</label>
+                    <select class="form-control" name="brand_id">
+                      {% for brand in brands %}
+                        <option value="{{brand.id}}">{{brand.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock content %}

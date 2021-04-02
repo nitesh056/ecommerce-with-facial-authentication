@@ -1,0 +1,28 @@
+
+<div class="modal fade" id="checkoutId{{checkout.id}}">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{{checkout.name}}'s Cart</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ul class="list-group">
+					{% for item in checkout.cart.cart_items %}
+						<li class="list-group-item">
+							<div>Name: {{ item.product.name}}</div>
+							<div>Quantity: {{ item.quantity}}</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="modal-footer right">
+				<a href="/admin/checkout/accept/{{checkout.id}}" class="btn btn-success right">Approve</a>
+				<a href="/admin/checkout/reject/{{checkout.id}}" class="btn btn-danger">Reject</a>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->

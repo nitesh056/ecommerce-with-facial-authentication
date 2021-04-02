@@ -1,40 +1,77 @@
 from fastapi import APIRouter, Body, HTTPException, status
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
-from models.schema.invoice import ResponseInvoiceList, ResponseInvoice, AddInvoiceItemRequest, ResponseInvoiceWithInvoiceItems, ResponseCheckout, CheckoutWithInvoice, ResponseCheckoutList
-from models.schema.schemas import InvoiceIn_Pydantic, CheckoutIn_Pydantic
+from models.schema.invoice import InvoiceInfoWithItems, ResponseInvoiceWithInvoiceItems, InvoiceInWithItems
+from models.schema.schemas import InvoiceIn_Pydantic
 from resources import strings
-# from services.invoice import ()
+from services.invoice import (
+    create_invoice,
+    get_all_invoices,
+    get_purchase_invoices,
+    get_sales_invoices
+)
 from services.errors import EntityDoesNotExist
 
 router = APIRouter()
 
 
-@router.get("/all", name="invoice:all")
+@router.post("/create", name="invoice:Create")
+async def create(
+    invoice_create = Body(..., embed=True, alias="invoice")
+):
+
+    thisone = await create_invoice(invoice_create)
+    # await create_invoice({
+    #     transaction_type: invoice_create.transaction_type,
+    #     grand_total: invoice_create.grand_total
+    # })
+    return thisone
+    # return InvoiceIn_Pydantic(**invoice_create.dict())
+    # invoice = await create_invoice(invoice_create.)
+    # try:
+    # except Exception as e:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_400_BAD_REQUEST,
+    #         detail=strings.ERROR_IN_SAVING_CART,
+    #     )
+
+    # return ResponseInvoice(invoice=invoice.dict())
+
+
+@router.get("/", name="invoice:all invoice")
 async def getAll():
     try:
         all_invoices = await get_all_invoices()
     except:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=strings.CART_NOT_FOUND_IN_DATABASE,
+            detail=strings.INVOICE_NOT_FOUND_IN_DATABASE,
         )
-    return ResponseInvoiceList(invoices=all_invoices.dict()['__root__'])
+    return ResponseInvoiceWithInvoiceItems(invoices=all_invoices.dict()['__root__'])
 
 
-# @router.post("/create", name="invoice:Create")
-# async def create(
-#     invoice_create: InvoiceIn_Pydantic = Body(..., embed=True, alias="invoice")
-# ):      
-#     try:
-#         invoice = await create_invoice(invoice_create)
-#     except Exception as e:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail=strings.ERROR_IN_SAVING_CART,
-#         )
+@router.get("/p", name="invoice:all purchase invoice")
+async def getAllPurchase():
+    try:
+        all_invoices = await get_purchase_invoices()
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.INVOICE_NOT_FOUND_IN_DATABASE,
+        )
+    return ResponseInvoiceWithInvoiceItems(invoices=all_invoices.dict()['__root__'])
 
-#     return ResponseInvoice(invoice=invoice.dict())
+
+@router.get("/s", name="invoice:all sales invoice")
+async def getAllPurchase():
+    try:
+        all_invoices = await get_sales_invoices()
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.INVOICE_NOT_FOUND_IN_DATABASE,
+        )
+    return ResponseInvoiceWithInvoiceItems(invoices=all_invoices.dict()['__root__'])
 
 
 # @router.post("/add-invoice-item", name="invoice:Add Item In Invoice")
