@@ -1,0 +1,29 @@
+
+<div class="modal fade" id="checkoutId{{invoice.id}}">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Invoice Items</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ul class="list-group">
+					{% for item in invoice.invoice_items %}
+						<li class="list-group-item">
+							<div>Name: {{ item.product_id }}</div>
+							<div>Quantity: {{ item.quantity }}</div>
+							<div>Rate: {{ item.rate }}</div>
+							<div>Amount: {{ item.quantity * item.rate }}</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="modal-footer right">
+
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->

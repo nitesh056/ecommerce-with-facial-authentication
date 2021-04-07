@@ -1,0 +1,125 @@
+{% extends "admin/admin-base.html" %}
+
+{% block title %} Create Invoice {% endblock %} 
+
+{% block content %}  
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Create Invoice</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <!-- form start -->
+            <form method="POST">
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-2">
+                    <label>Transaction Type:</label>
+                    <select class="form-control" id="transactionType" name="transaction_type">
+                      <option value="purchase">Purchase</option>
+                      <option value="sales">Sales</option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-8"></div>
+                  
+                  <div class="form-group col-md-2">
+                    <label for="name">Invoice Date:</label>
+                    <input type="date" class="form-control" name="invoice_date">
+                  </div>
+                </div>
+
+                <table class="table table-bordered">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>S.N</th>
+                      <th class="w-50">Product</th>
+                      <th>Quantity</th>
+                      <th>Rate</th>
+                      <th class="w-25">Amount</th>
+                    </tr>
+                  </thead>
+
+                  <template id="item-row-template">
+                    <tr id="item-row-0">
+                      <td>1</td>
+                      <td>
+                        <select class="form-control" name="product_id" onchange="changeProduct('#item-row-0')">
+                          {% for product in products %}
+                            <option value="{{product.id}}" id="product-info">{{product.name}}</option>
+                          {% endfor %}
+                        </select>
+                      </td> 
+                      <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-0')"></td>
+                      <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-0')"></td>
+                      <td>
+                        <div class="row">
+                          <input type="text" class="form-control col-sm-9" name="amount" value="{{products[0].current_price}}" readonly>
+                          <div class="col-sm-1"></div>
+                          <button class="btn btn-outline-danger col-sm-2 rounded-lg" onclick="event.preventDefault(); removeItem('#item-row-0')"><i class="fas fa-minus"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </template>
+
+                  <tbody id="invoice-body">
+                    <tr id="item-row-1">
+                      <td>1</td>
+                      <td>
+                        <select class="form-control" name="product_id" onchange="changeProduct('#item-row-1')">
+                          {% for product in products %}
+                            <option value="{{product.id}}" id="product-info">{{product.name}}</option>
+                          {% endfor %}
+                        </select>
+                      </td> 
+                      <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-1')"></td>
+                      <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-1')"></td>
+                      <td>
+                        <div class="row">
+                          <input type="text" class="form-control col-sm-9" name="amount" value="{{products[0].current_price}}" readonly>
+                          <div class="col-sm-1"></div>
+                          <button class="btn btn-outline-danger col-sm-2 rounded-lg" onclick="event.preventDefault(); removeItem('#item-row-1')"><i class="fas fa-minus"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  
+                  <tfoot>
+                    <tr>
+                      <td colspan="4" class="text-right"><div class="p-2">Grand Total:</div></td>
+                      <td>
+                          <input type="text" class="form-control" name="grand_total" value="123" readonly>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <button class="btn btn-primary" onclick="event.preventDefault(); addItem();">Add Item</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <script>
+    var products = {{products|tojson}}
+  </script>
+{% endblock content %}

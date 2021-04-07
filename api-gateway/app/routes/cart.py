@@ -10,9 +10,7 @@ cart_router = Blueprint('cart', __name__, url_prefix='/cart')
 @get_user_info_middleware
 def get_cart_item():
     status_success = False
-    print(g.user)
     if g.user is not None:
-        print(g.user)
         response, status_success = get('PRODUCT_URL', '/cart/'+ str(g.user['id']))
     
     if status_success:

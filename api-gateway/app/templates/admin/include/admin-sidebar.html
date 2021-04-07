@@ -62,6 +62,35 @@
               </p>
             </a>
           </li>
+          <li class="nav-item has-treeview {% if 'invoice' in request.url_rule.endpoint %} menu-open {% endif %}"> <!-- menu-open -->
+            <a href="#" class="nav-link"> <!-- active -->
+              <i class="fas fa-exchange-alt"></i>
+              <p class="ml-1">
+                Transaction
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview ml-4">
+              <li class="nav-item">
+                <a href="/admin/invoice/p" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p class="ml-1">List Purchases</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/invoice/s" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p class="ml-1">List Sales</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/invoice/create" class="nav-link">
+                  <i class="fas fa-plus"></i>
+                  <p class="ml-1">Create Transaction</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

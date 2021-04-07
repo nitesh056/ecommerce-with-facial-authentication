@@ -1,6 +1,7 @@
 from tortoise import Tortoise
 from tortoise.contrib.pydantic import pydantic_model_creator, pydantic_queryset_creator
 from pydantic import BaseModel, EmailStr
+from datetime import date
 
 from models.domain.invoice import Invoice
 from models.domain.invoiceItem import InvoiceItem
@@ -20,6 +21,8 @@ Invoice_Item_List_Pydantic = pydantic_queryset_creator(InvoiceItem)
 
 
 class InvoiceIn_Pydantic(BaseModel):
+    invoice_date: date
+    created_by: int
     transaction_type: str
     grand_total: int
     

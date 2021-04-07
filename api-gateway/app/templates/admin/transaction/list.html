@@ -1,7 +1,6 @@
 {% extends "admin/admin-base.html" %}
 
 {% block title %} Transaction List {% endblock %} 
-
 {% block content %}
     <section class="content-header">
       <div class="container-fluid">
@@ -23,35 +22,27 @@
                 <table id="admin-datatable" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Remarks</th>
+                    <th>Invoice ID</th>
+                    <th>Created By</th>
+                    <th>Invoice Date</th>
+                    <th>Grand Total</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                      {% for checkout in checkouts %}
+                      {% for invoice in invoices %}
                         <tr>
-                            <td>{{checkout.name}}</td>
-                            <td>{{checkout.email}}</td>
-                            <td>{{checkout.address}}</td>
-                            <td>{{checkout.phone_no}}</td>
-                            <td>{{checkout.remarks}}</td>
+                            <td>{{invoice.id}}</td>
+                            <td>{{invoice.created_by}}</td>
+                            <td>{{invoice.invoice_date}}</td>
+                            <td>{{invoice.grand_total}}</td>
                             <td>
-                              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#checkoutId{{checkout.id}}">
-                                Check Cart
+                              <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#checkoutId{{invoice.id}}">
+                                Check Invoice Items
                               </button>
-                              {% if checkout.status == 'pending' %}
-                                <a class="btn btn-primary btn-xs" href="/admin/checkout/accept/{{checkout.id}}">Approve</a>
-                                <a class="btn btn-danger btn-xs" href="/admin/checkout/reject/{{checkout.id}}">Reject</a>
-                              {% else %}
-                                {{checkout.status}}
-                              {% endif %}
                           </td>
                         </tr>
-                        {% include 'admin/checkout/cart-item-modal.html' %}
+                        {% include 'admin/transaction/invoice-item-modal.html' %}
                       {% endfor %}
                   </tbody>
                   </div>

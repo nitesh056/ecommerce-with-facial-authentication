@@ -5,6 +5,7 @@ from routes.admin.admin import admin_router
 from routes.admin.user import user_router
 from routes.admin.product import product_router
 from routes.admin.checkout import checkout_router
+from routes.admin.invoice import invoice_router
 
 
 def register_blueprints(app):
@@ -15,3 +16,4 @@ def register_blueprints(app):
     app.register_blueprint(user_router)
     app.register_blueprint(product_router)
     app.register_blueprint(checkout_router)
+    app.register_blueprint(invoice_router)
