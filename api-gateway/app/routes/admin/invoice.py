@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, flash, g
 from werkzeug.utils import secure_filename
+from random import random
 
 from middlewares.auth import get_user_info_middleware, check_auth_middleware
 from services.requests import get, post
@@ -52,3 +53,9 @@ def createInvoice():
         return render_template('admin/transaction/create.html', products=response['products'])
 
     response, status_success = get('TRANSACTION_URL', '/invoice/s')
+
+
+@invoice_router.route('/add-item/', methods=["GET"])
+def addItem():
+    response, status_success = get('PRODUCT_URL', '/product/all')
+    return render_template('admin/transaction/invoice-details.html', products=response['products'], randomId=int(random() * 100000))

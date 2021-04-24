@@ -1,41 +1,47 @@
 function changeProduct(rowId){
     let rowNodes = $(rowId)[0].children;
 
-    const chossenProduct = products.find(product => product.id == rowNodes[1].children[0].value);
+    const chossenProduct = products.find(product => product.id == rowNodes[0].children[0].value);
 
-    rowNodes[3].children[0].value = chossenProduct['current_price'];
+    rowNodes[2].children[0].value = chossenProduct['current_price'];
 
     if ($('#transactionType')[0].value == 'sales') {
-        rowNodes[2].children[0].max = chossenProduct['qty'];
+        rowNodes[1].children[0].max = chossenProduct['qty'];
     }
 
-    rowNodes[4].children[0].children[0].value = chossenProduct['current_price'] * rowNodes[2].children[0].value;
-
+    rowNodes[3].children[0].children[0].value = chossenProduct['current_price'] * rowNodes[1].children[0].value;
+    calculateGrandTotal();
 }
 
 function changeAmount(rowId) {
     let rowNodes = $(rowId)[0].children;
 
-    rowNodes[4].children[0].children[0].value = rowNodes[2].children[0].value * rowNodes[3].children[0].value;
+    rowNodes[3].children[0].children[0].value = rowNodes[1].children[0].value * rowNodes[2].children[0].value;
+    calculateGrandTotal();
 }
 
-function removeItem(rowId) {
-    console.log('removeItem')
+function calculateGrandTotal() {
+    const rowNodes = $('.total-amount');
+    let grandTotal = 0;
+    for (let i = 0; i < rowNodes.length; i++) {
+        grandTotal += parseInt(rowNodes[i].value);
+    }
+    $('#grandTotal').val(grandTotal)
+    
 }
 
 function addItem() {
-    // console.log($('#item-row-template'))
-    let template = $('#item-row-template')[0].content.firstElementChild
-    console.log(template)
-    
-    // .content.children['item-row-0']
-    
-    // let templateClone = (template).clone;
-    // console.log(templateClone)
-    // var templateChiildren =  template.children['item-row-0']
-    // template.
-    let template2 = template.clone
-    console.log(template)
-    // .appendTo("#invoice-body");
-    // clone.show();
+    $.ajax({
+        url: "/admin/invoice/add-item/",
+        type: "GET",
+        success: function(resp){
+            $("#invoice-body").append(resp);
+            calculateGrandTotal();
+        }
+    });
+}
+
+function removeItem(rowId) {
+    $(rowId).remove();
+    calculateGrandTotal();
 }

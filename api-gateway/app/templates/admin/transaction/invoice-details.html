@@ -1,0 +1,18 @@
+<tr id="item-row-{{randomId}}">
+  <td>
+    <select class="form-control" name="product_id" onchange="changeProduct('#item-row-{{randomId}}')">
+      {% for product in products %}
+        <option value="{{product.id}}" id="product-info">{{product.name}}</option>
+      {% endfor %}
+    </select>
+  </td> 
+  <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-{{randomId}}')"></td>
+  <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-{{randomId}}')"></td>
+  <td>
+    <div class="row">
+      <input type="text" class="form-control col-sm-9 total-amount" name="amount" value="{{products[0].current_price}}" readonly>
+      <div class="col-sm-1"></div>
+      <button class="btn btn-outline-danger col-sm-2 rounded-lg" onclick="event.preventDefault(); removeItem('#item-row-{{randomId}}')"><i class="fas fa-minus"></i></button>
+    </div>
+  </td>
+</tr>

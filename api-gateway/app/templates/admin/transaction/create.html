@@ -43,7 +43,6 @@
                 <table class="table table-bordered">
                   <thead class="thead-light">
                     <tr>
-                      <th>S.N</th>
                       <th class="w-50">Product</th>
                       <th>Quantity</th>
                       <th>Rate</th>
@@ -51,31 +50,8 @@
                     </tr>
                   </thead>
 
-                  <template id="item-row-template">
-                    <tr id="item-row-0">
-                      <td>1</td>
-                      <td>
-                        <select class="form-control" name="product_id" onchange="changeProduct('#item-row-0')">
-                          {% for product in products %}
-                            <option value="{{product.id}}" id="product-info">{{product.name}}</option>
-                          {% endfor %}
-                        </select>
-                      </td> 
-                      <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-0')"></td>
-                      <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-0')"></td>
-                      <td>
-                        <div class="row">
-                          <input type="text" class="form-control col-sm-9" name="amount" value="{{products[0].current_price}}" readonly>
-                          <div class="col-sm-1"></div>
-                          <button class="btn btn-outline-danger col-sm-2 rounded-lg" onclick="event.preventDefault(); removeItem('#item-row-0')"><i class="fas fa-minus"></i></button>
-                        </div>
-                      </td>
-                    </tr>
-                  </template>
-
                   <tbody id="invoice-body">
                     <tr id="item-row-1">
-                      <td>1</td>
                       <td>
                         <select class="form-control" name="product_id" onchange="changeProduct('#item-row-1')">
                           {% for product in products %}
@@ -87,7 +63,7 @@
                       <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-1')"></td>
                       <td>
                         <div class="row">
-                          <input type="text" class="form-control col-sm-9" name="amount" value="{{products[0].current_price}}" readonly>
+                          <input type="text" class="form-control col-sm-9 total-amount" name="amount" value="{{products[0].current_price}}" readonly>
                           <div class="col-sm-1"></div>
                           <button class="btn btn-outline-danger col-sm-2 rounded-lg" onclick="event.preventDefault(); removeItem('#item-row-1')"><i class="fas fa-minus"></i></button>
                         </div>
@@ -97,9 +73,9 @@
                   
                   <tfoot>
                     <tr>
-                      <td colspan="4" class="text-right"><div class="p-2">Grand Total:</div></td>
+                      <td colspan="3" class="text-right"><div class="p-2">Grand Total:</div></td>
                       <td>
-                          <input type="text" class="form-control" name="grand_total" value="123" readonly>
+                          <input type="text" class="form-control" name="grand_total" id="grandTotal" value="{{products[0].current_price}}" readonly>
                       </td>
                     </tr>
                   </tfoot>
