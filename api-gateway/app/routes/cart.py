@@ -16,7 +16,7 @@ def get_cart_item():
     if status_success:
         return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
     else:
-        return "Cart empty"
+        return "<i class='fas fa-shopping-cart pl-4' style='padding-top: 12px;'></i>"
         
 
 @cart_router.route('/add-to-cart/<product_id>', methods=['GET'])
@@ -59,6 +59,14 @@ def showCheckout():
         })
 
         if status_success:
+            response, status_success = post('NOTIFICATION_URL', '/notification/g/create', {
+                "notification": {
+                    "message": f"New Checkout Submitted by {request.form['name']}",
+                    "redirect_to": "/admin/checkout/",
+                    "group_type": "admin"
+                }
+            })
+            
             flash("Your order has been saved", "info")
             return redirect("/")
         else:

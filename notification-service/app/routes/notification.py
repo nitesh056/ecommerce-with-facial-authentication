@@ -44,29 +44,19 @@ async def create(
     return notification
 
 
-@router.get("/n/{user_id}", name="notification:get all notifications")
-async def getAllNotification(user_id):
-    try:
-        all_notifications = await get_all_notifications(user_id)
-    except:
+@router.get("/{role}/{user_id}", name="notification:get all notifications")
+async def getAllNotification(role, user_id):
+    all_personal_notifications = await get_all_notifications(user_id)
+    all_general_notifications = await get_all_general_notifications(role)
+
+    all_notifications = all_personal_notifications.dict()['__root__'] + all_general_notifications.dict()['__root__']
+    all_notifications.sort(reverse=True, key=lambda x: x['created_at'])
+    
+    if(len(all_notifications) == 0):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=strings.NOTIFICATION_NOT_FOUND_IN_DATABASE,
         )
 
-    # return all_notifications
-    return ResponseNotificatonList(notifications=all_notifications.dict()['__root__'])
-
-
-@router.get("/g/{role}", name="notification:get all general notifications")
-async def getAllGeneralNotification(role):
-    try:
-        all_general_notifications = await get_all_general_notifications(role)
-    except:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=strings.NOTIFICATION_NOT_FOUND_IN_DATABASE,
-        )
-
-    return ResponseGeneralNotificatonList(notifications=all_general_notifications.dict()['__root__'])
+    return all_notifications
 

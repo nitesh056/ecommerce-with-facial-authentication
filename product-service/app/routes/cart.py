@@ -106,7 +106,7 @@ async def checkout(
 async def getPendingCheckouts():
     try:
         checkouts = await get_all_checkouts()
-        print(checkouts)
+        
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -143,7 +143,7 @@ async def edit(
             detail="error while editing checkout",
         )
 
-    return "success"
+    return checkout.dict()
 
 
 @router.get("/{user_id}", name="cart:Get Specific")

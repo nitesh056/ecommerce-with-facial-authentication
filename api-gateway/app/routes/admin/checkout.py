@@ -21,6 +21,15 @@ def accept(checkout_id):
         }
     })
 
+    if(status_success):
+        response, status_success = post('NOTIFICATION_URL', '/notification/n/create', {
+            "notification": {
+                "message": f"Your checkout Request has been Accepted",
+                "redirect_to": "",
+                "recipient": response['cart']['user_id']
+            }
+        })
+
     return redirect('/admin/checkout/')
 
 @checkout_router.route('/reject/<checkout_id>', methods=['GET'])
@@ -30,5 +39,14 @@ def reject(checkout_id):
             "status": "canceled"
         }
     })
+
+    if(status_success):
+        response, status_success = post('NOTIFICATION_URL', '/notification/n/create', {
+            "notification": {
+                "message": f"Your checkout Request has been Accepted",
+                "redirect_to": "",
+                "recipient": response['cart']['user_id']
+            }
+        })
     
     return redirect('/admin/checkout/')

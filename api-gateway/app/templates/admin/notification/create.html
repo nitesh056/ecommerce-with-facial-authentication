@@ -1,0 +1,56 @@
+{% extends "admin/admin-base.html" %}
+
+{% block title %} Notification {% endblock %} 
+
+{% block content %}  
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Send Notification</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <!-- form start -->
+              <form method="POST">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Group Type</label>
+                    <select class="form-control" name="group_type">
+                      <option value="admin">To Admins</option>
+                      <option value="customer">To Users</option>
+                    </select>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="message">Notification Message:</label>
+                    <input type="text" class="form-control" name="message">
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock content %}

@@ -18,7 +18,6 @@ async def create_general_notification(notification_create):
 
 
 async def get_all_notifications(user_id):
-    print(user_id)
     notification_row = await Notification_List_Pydantic.from_queryset(
         Notification.filter(recipient=user_id)
     )

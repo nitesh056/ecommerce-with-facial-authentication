@@ -23,7 +23,17 @@ $(function () {
         url: "/cart",
         type: "GET",
         success: function(resp){
-            $("#nav-right").append(resp);
+            $("#nav-right-cart").append(resp);
+        }
+    });
+});
+
+$(function () {
+    $.ajax({
+        url: "/notification",
+        type: "GET",
+        success: function(resp){
+            $("#nav-right-notification").append(resp);
         }
     });
 });

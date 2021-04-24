@@ -11,6 +11,4 @@ class Brand(models.Model):
     id = fields.IntField(pk=True)
     name = fields.CharField(255, unique=True)
     status = fields.CharEnumField(Status, default=Status.ACTIVE)
-    # product = fields.ForeignKeyField('models.Product', related_name='products', to_field="brand_id")
-    # image = fields.CharField(255)
     
