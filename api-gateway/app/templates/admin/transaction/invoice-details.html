@@ -6,8 +6,8 @@
       {% endfor %}
     </select>
   </td> 
-  <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-{{randomId}}')"></td>
-  <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-{{randomId}}')"></td>
+  <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-{{randomId}}')" required></td>
+  <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-{{randomId}}')" required></td>
   <td>
     <div class="row">
       <input type="text" class="form-control col-sm-9 total-amount" name="amount" value="{{products[0].current_price}}" readonly>

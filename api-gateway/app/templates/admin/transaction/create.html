@@ -36,7 +36,7 @@
                   
                   <div class="form-group col-md-2">
                     <label for="name">Invoice Date:</label>
-                    <input type="date" class="form-control" name="invoice_date">
+                    <input type="date" class="form-control" name="invoice_date" required>
                   </div>
                 </div>
 
@@ -59,8 +59,8 @@
                           {% endfor %}
                         </select>
                       </td> 
-                      <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-1')"></td>
-                      <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-1')"></td>
+                      <td><input type="number" class="form-control" min="1" max="" name="quantity" value="1" oninput="changeAmount('#item-row-1')" required></td>
+                      <td><input type="number" class="form-control" name="rate" value="{{products[0].current_price}}" oninput="changeAmount('#item-row-1')" required></td>
                       <td>
                         <div class="row">
                           <input type="text" class="form-control col-sm-9 total-amount" name="amount" value="{{products[0].current_price}}" readonly>
