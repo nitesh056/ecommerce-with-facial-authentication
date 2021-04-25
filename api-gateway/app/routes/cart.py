@@ -24,7 +24,7 @@ def get_cart_item():
 def add_to_cart(product_id):
     if g.user is not None:
         response, status_success = post('PRODUCT_URL', '/cart/add-cart-item', {
-            'user_id': str(g.user['id']),
+            'user_id': g.user['id'],
             'product_id': product_id,
         })
         return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])
@@ -36,7 +36,7 @@ def add_to_cart(product_id):
 def remove_in_cart(product_id):
     if g.user is not None:
         response, status_success = post('PRODUCT_URL', '/cart/remove-cart-item', {
-            'user_id': str(g.user['id']),
+            'user_id': g.user['id'],
             'product_id': product_id,
         })
         return render_template('cart/nav-cart.html', cart=response, cartItems=response['cart_items'])

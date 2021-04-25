@@ -18,7 +18,7 @@ body {
 }
 
 a {
-    color: #ccc;
+    color: #fff;
 }
 
 a:hover {
@@ -255,4 +255,29 @@ a:hover {
 }
 .top-cart-row .top-cart-holder .total-price-basket {
     margin: 0 0 0 5px;
+}
+
+
+.navbar-light {
+    background-image: radial-gradient(#0d297aa6, #005795d1) !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(255, 255, 255) !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: rgb(0, 0, 0) !important;
+}
+
+.navbar-light .navbar-brand {
+    color: rgb(255, 255, 255) !important;
+}
+
+.shadow-sm {
+    box-shadow: 0px 1px 4px 0px rgb(114, 114, 114);
+}
+
+.w-60 {
+    width: 65%;
 }

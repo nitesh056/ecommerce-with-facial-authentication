@@ -3,8 +3,8 @@ function addToCart(product_id) {
         url: "/cart/add-to-cart/"+product_id,
         type: "GET",
         success: function(resp, status_code){
-            $("#nav-right").empty();
-            $("#nav-right").append(resp);
+            $("#nav-right-cart").empty();
+            $("#nav-right-cart").append(resp);
             $("#toastMessage").text("Item added!!!");
             $("#flashToast").fadeIn().delay(3000).fadeOut();
         },
@@ -20,8 +20,8 @@ function removeInCart(product_id) {
         url: "/cart/remove-in-cart/"+product_id,
         type: "GET",
         success: function(resp){
-            $("#nav-right").empty();
-            $("#nav-right").append(resp);
+            $("#nav-right-cart").empty();
+            $("#nav-right-cart").append(resp);
             $("#toastMessage").text("Item Removed!!!");
             $("#flashToast").fadeIn().delay(3000).fadeOut();
         },
