@@ -8,7 +8,8 @@ from services.brand import (
     create_brand,
     get_all_brands,
     check_brandname_is_taken,
-    get_brand
+    get_brand,
+    delete_brand
 )
 from services.errors import EntityDoesNotExist
 
@@ -60,3 +61,16 @@ async def getSpecific(brand_name):
         )
 
     return ResponseBrandWithAllProducts(brand=brand)
+
+
+@router.delete("/{brand_id}", name="brand:Delete")
+async def delete(brand_id):
+    try:
+        await delete_brand(brand_id)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=strings.ERROR_WHILE_DELETING_PRODUCT,
+        )
+
+    return "Deleted Successfully"

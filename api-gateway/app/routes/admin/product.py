@@ -7,6 +7,33 @@ from services.requests import get, post, put, delete
 product_router = Blueprint('product-admin', __name__, url_prefix='/admin/products')
 
 
+@product_router.route('/brands', methods=["GET", "POST"])
+def manageBrand():
+    if request.method == 'GET':
+        response, status_success = get('PRODUCT_URL', '/brand/')
+        return render_template('admin/product/brand.html', brands=response['brands'])
+
+    if request.method == 'POST':
+        response, status_success = post('PRODUCT_URL', '/brand/create', {
+            'brand': {
+                'name': request.form['name'],
+                'status': 'active',
+            }
+        })
+
+        if status_success:
+            return redirect('/admin/products/brands')
+        else:
+            return response
+
+
+@product_router.route('/brands/delete/<brand_id>', methods=["GET"])
+def removeBrand(brand_id):
+    if request.method == 'GET':
+        response, status_success = delete('PRODUCT_URL', '/brand/' + str(brand_id))
+        return redirect('/admin/products/brands')
+
+
 @product_router.route('/', methods=["GET"])
 def read():
     if request.method == 'GET':

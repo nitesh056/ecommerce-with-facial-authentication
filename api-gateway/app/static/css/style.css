@@ -44,7 +44,7 @@ a:hover {
     background: #191919;
     text-align: center;
     transition: 0.25s;
-    margin-top: 100px;
+    margin: 160px 0 96px 0;
     box-shadow: 10px 10px 19px 6px rgba(0,0,0,0.75) ;
     -webkit-box-shadow: 10px 10px 19px 6px rgba(0,0,0,0.75) ;
     -moz-box-shadow: 10px 10px 19px 6px rgba(0,0,0,0.75) ;

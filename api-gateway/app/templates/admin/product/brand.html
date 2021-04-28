@@ -1,0 +1,68 @@
+{% extends "admin/admin-base.html" %}
+
+{% block title %} Brand List {% endblock %} 
+
+{% block content %}
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Brands</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <div class="card">
+              <form method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <div class="col-md-4">
+                      <label for="name">Product Name:</label>
+                      <input type="text" class="form-control" name="name">
+                    </div>
+
+                    <div class="col-md-4" style="padding-top: 32px;">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <table id="admin-datatable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      {% for brand in brands %}
+                        <tr>
+                            <td>{{brand.name}}</td>
+                            <td>
+															<a class="btn btn-danger btn-xs" href="/admin/products/brands/delete/{{brand.id}}">Delete</a>
+														</td>
+                        </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+{% endblock content %}

@@ -24,3 +24,8 @@ async def get_brand(brand_name):
     if brand:
         return await Brand_Pydantic.from_tortoise_orm(brand)
     raise EntityDoesNotExist()
+
+
+async def delete_brand(brand_id):
+    brand = await Brand.get_or_none(id=brand_id)
+    await brand.delete()

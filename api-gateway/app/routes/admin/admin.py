@@ -10,4 +10,4 @@ admin_router = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin_router.route('/', methods=["GET", "POST"])
 def getDashboard():
-    return "Dashboard"
+    return render_template('admin/index.html')
