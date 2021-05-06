@@ -1,6 +1,6 @@
 from jinja2 import TemplateNotFound
 
-from flask import Blueprint, request, render_template, redirect
+from flask import Blueprint, request, render_template, redirect, flash
 from werkzeug.utils import secure_filename
 from services.requests import get, post
 
@@ -20,9 +20,11 @@ def create():
         })
 
         if status_success:
-            return redirect('/admin/notification/create')
+            flash("Notification Created Succesfully", "success")
         else:
-            return response
+            flash("Error while creating notification", "danger")
+
+        return redirect('/admin/notification/create')
 
     if request.method == 'GET':
         return render_template('admin/notification/create.html')

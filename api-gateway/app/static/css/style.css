@@ -16,12 +16,20 @@ body {
     background-color: #000;
     color: #ccc;
 }
-
-a {
-    color: #fff;
+a{
+    color: #46c3db;
+    transition: all 0.5s;
+}
+a:hover {
+    color: #21e6c1;
 }
 
-a:hover {
+
+.main-nav>li>a {
+    color: #ccc;
+}
+
+.main-nav>li>a:hover {
     color: #444;
 }
 

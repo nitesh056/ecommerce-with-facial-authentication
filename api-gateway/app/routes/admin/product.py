@@ -74,9 +74,10 @@ def create():
         })
 
         if status_success:
-            return redirect('/admin/products')
-        else:
-            return response
+            flash("Product Saved Succesfully", "success")
+            return redirect('/admin/products/')
+
+        flash("Error while saving Product", "danger")
 
     if request.method == 'GET':
         response, status_success = get('PRODUCT_URL', '/brand/')

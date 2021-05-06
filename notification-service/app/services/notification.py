@@ -1,7 +1,6 @@
 from models.domain.notification import Notification
 from models.domain.generalNotification import GeneralNotification, NotificationSeenStatus
 from models.schema.schemas import Notification_List_Pydantic, Notification_Pydantic, General_Notification_Pydantic, General_Notification_List_Pydantic
-# from models.schema.invoice import InvoiceInWithItems
 from services.errors import EntityDoesNotExist
 
 
@@ -34,26 +33,3 @@ async def get_all_general_notifications(role):
         return general_notification_row
     raise EntityDoesNotExist()
 
-
-
-# async def get_all_invoices():
-#     invoice_row = await Invoice_List_Pydantic.from_queryset(Invoice.all())
-#     if invoice_row:
-#         return invoice_row
-#     raise EntityDoesNotExist()
-
-# async def get_purchase_invoices():
-#     invoice_row = await Invoice_List_Pydantic.from_queryset(
-#         Invoice.filter(transaction_type="purchase")
-#     )
-#     if invoice_row:
-#         return invoice_row
-#     raise EntityDoesNotExist()
-
-# async def get_sales_invoices():
-#     invoice_row = await Invoice_List_Pydantic.from_queryset(
-#         Invoice.filter(transaction_type="sales")
-#     )
-#     if invoice_row:
-#         return invoice_row
-#     raise EntityDoesNotExist()

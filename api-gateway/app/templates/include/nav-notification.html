@@ -1,15 +1,17 @@
 <div class="nav-item dropdown">
     <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="far fa-bell" style="font-size: 2rem;"></i>
+        <i class="far fa-bell" style="font-size: 1rem;"></i>
         <!-- <span class="badge badge-warning navbar-badge">{{ number_of_notifications }}</span> -->
     </a>
     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         {% for notification in notifications %}
-            <a href="{{notification.redirect_to}}" class="dropdown-item">
-                <!-- <i class="fas fa-envelope mr-2"></i> -->
-                {{notification.message}}
-                <span class="float-right text-muted text-sm">{{notification.created_at}}</span>
-            </a>
+        <a href="{{notification.redirect_to}}" class="dropdown-item">
+            <!-- <i class="fas fa-envelope mr-2"></i> -->
+            {{notification.message}}
+            <span class="float-right text-muted text-sm">{{notification.created_at}}</span>
+        </a>
+        {% else %}
+            <span class="p-4">No Notification Available</span>
         {% endfor %}
     </div>
 </div>

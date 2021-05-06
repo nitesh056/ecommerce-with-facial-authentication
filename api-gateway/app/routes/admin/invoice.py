@@ -44,7 +44,12 @@ def createInvoice():
             }
         })
 
-        print(response)
+        if status_success:
+            flash("Invoice Saved Succesfully", "success")
+            return redirect('/admin/invoice/' + 'p' if request.form['transaction_type'] == 'purchase' else 's')
+
+        flash("Error while saving Invoice", "danger")
+
         return redirect('/admin/invoice/create')
 
     if request.method == 'GET':
