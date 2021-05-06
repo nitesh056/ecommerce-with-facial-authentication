@@ -1,9 +1,10 @@
-from flask import Blueprint, request, render_template, g
+from flask import Blueprint, request, render_template, g, Response
 import requests
+import cv2
 
 from middlewares.auth import get_user_info_middleware
 from services.requests import get, post
-
+from services.camera import run_frame
 
 index_router = Blueprint('index', __name__, url_prefix='/')
 
@@ -66,3 +67,19 @@ def get_notifications():
 
     return render_template('include/nav-notification.html', notifications=notifications, number_of_notifications=len(notifications))
     
+
+
+def gen():
+    cap = cv2.VideoCapture(0)
+    while True:
+        try:        
+            video_frame = run_frame(cap)
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + video_frame + b'\r\n\r\n')
+        except:
+            cap.release()
+            cap = cv2.VideoCapture(0)
+
+@index_router.route('/video-feed/capture-face')
+def captureFace():
+    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')

@@ -2,7 +2,7 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container" style="min-height: 86vh;">
         <div class="row">
             <div class="col-md-3" ></div>
             <div class="col-md-6">
@@ -12,10 +12,14 @@
                     <p class="text-danger">{{ payload.auth_error_message if payload is defined else '' }}</p>
                     <input type="email" name="email" placeholder="E-mail" value="{{ payload.email if payload is defined else '' }}" required>
                     <input type="password" name="password" placeholder="Password" required>
-                    <input type="submit" name="" value="Login" href="#">
+                    <div class="row">
+                        <input class="" type="submit" name="" value="Login" href="#">
+                        <button class="col-sm-6 btn btn-info btn-xs" onclick="event.preventDefault()" data-toggle="modal" data-target="#face-auth">Authenticate with Face</button>
+                    </div>
                 </form>
             </div>
             <div class="col-md-3" ></div>
         </div>
     </div>
+    {% include 'auth/authenticate-face.html' %}
 {% endblock %}

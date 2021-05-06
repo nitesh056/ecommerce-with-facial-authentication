@@ -2,10 +2,37 @@ from flask import Blueprint, request, render_template, make_response, redirect, 
 import requests
 
 from middlewares.auth import no_auth_middleware, get_user_info_middleware
-from services.requests import get, post
+from services.requests import get, post, put
 
 
 auth_router = Blueprint('auth', __name__, url_prefix='/u')
+
+
+@auth_router.route('/profile', methods=['POST', 'GET'])
+@get_user_info_middleware
+def showProfile():
+    if request.method == 'GET':
+        return render_template('auth/profile.html', user=g.user)
+    
+    if request.method == 'POST':
+        
+        if len(request.form.getlist('status')) == 0:
+            userStatus = "inactive"
+        else:
+            userStatus = request.form.getlist('status')[0]
+    
+        response, status_success = put('AUTH_URL', '/u/edit/' + str(g.user['id']), {
+            'user': {
+                'name': request.form['name'],
+                'email': request.form['email'],
+                'phone_number': request.form['phone_number'],
+                'password': request.form['password'],
+                'status': userStatus
+            }
+        })
+
+        return redirect('/u/profile')
+    
 
 
 @auth_router.route('/login', methods=['POST', 'GET'])

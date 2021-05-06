@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="container" style="padding-top: 128px; min-height: 86vh;">
+    <div class="main-body">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3>Your Profile</h3>
+        </div>
+      </div>
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div class="mt-3">
+                      <h5>{{ user.name }}</h5>
+                      <p class="text-secondary mb-1">{{ user.email }}</p>
+                      <p class="text-secondary mb-1">{{ user.role }}</p>
+                      <p class="text-muted font-size-sm">{{ user.phone_number }}</p>
+                      <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#face-capture">Enable Facial Recognition</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <form class="card mb-3" action="" method="post">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0">Name</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input class="form-control" type="text" name="name" value="{{ user.name }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0">Email</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input class="form-control" type="text" name="email" value="{{ user.email }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0">Phone</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input class="form-control" type="text" name="phone_number" value="{{ user.phone_number }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0">Password</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input class="form-control" type="password" name="password">
+                      <p class="text-muted font-size-sm mb-0">Leave empty if you dont want to change your password</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0">Use Facial Auth</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="checkbox" name="status" value="active" {{ 'checked' if user.status == 'active' else '' }}>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <input class="btn btn-primary" type="submit" value="Edit">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% include 'auth/camera.html' %}
+{% endblock %}
+

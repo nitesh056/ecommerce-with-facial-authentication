@@ -17,7 +17,8 @@ from services.user import (
     hash_password,
     verify_password,
     get_all_users,
-    change_user_role
+    change_user_role,
+    edit_user
 )
 from services.errors import EntityDoesNotExist
 
@@ -127,4 +128,26 @@ async def editRole(
             detail="error while editing user",
         )
     
-    return "role changed to " + user_edit['role']
+    return "role changed"
+
+
+@router.put("/edit/{user_id}", name="auth:Edit User")
+async def editUser(
+    user_id,
+    user_edit = Body(..., embed=True, alias="user")
+):
+    if user_edit['password'] == "":
+        del user_edit['password']
+    else:
+        user_edit['password'] = await hash_password(user_edit['password'])
+    
+    try:
+        user = await edit_user(user_id, user_edit)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="error while editing user",
+        )
+    
+    return user
+

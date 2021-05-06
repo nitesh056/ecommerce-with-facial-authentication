@@ -88,7 +88,7 @@ a:hover {
     border-color: #2ecc71
 }
 
-.auth-form input[type="submit"] {
+.auth-form input[type="submit"], .auth-form button {
     border: 0;
     background: none;
     display: block;
@@ -104,7 +104,7 @@ a:hover {
 }
 
 .auth-form input[type="submit"]:hover {
-    width: 150px;
+    /* width: 150px; */
     background: #2ecc71
 }
 

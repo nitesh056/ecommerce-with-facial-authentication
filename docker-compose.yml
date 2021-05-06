@@ -15,9 +15,39 @@ services:
     ports:
       - "8001:8001"
 
+  transaction-service:
+    build: ./transaction-service
+    volumes:
+      - ./transaction-service:/usr/src/app
+    ports:
+      - "8002:8002"
+
+  notification-service:
+    build: ./notification-service
+    volumes:
+      - ./notification-service:/usr/src/app
+    ports:
+      - "8003:8003"
+    
+  face-recognition-service:
+    build: ./face-recognition-service
+    volumes:
+      - ./face-recognition-service:/usr/src/app
+    ports:
+      - "8004:8004"
+    depends_on: 
+      - auth-service
+
   api-gateway:
     build: ./api-gateway
     volumes:
       - ./api-gateway:/usr/src/app
     ports:
       - "5000:5000"
+    depends_on: 
+      - auth-service
+      - product-service
+      - transaction-service
+      - notification-service
+      - face-recognition-service
+

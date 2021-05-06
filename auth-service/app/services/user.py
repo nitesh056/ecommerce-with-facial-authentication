@@ -37,6 +37,12 @@ async def create_user(user_create):
     await user_obj.save()
     return user_obj
 
+async def edit_user(user_id, user_edit):
+    user = await User.get_or_none(id=user_id)
+    updated_user = user.update_from_dict(data=user_edit)
+    await updated_user.save()
+    return "success"
+
 async def get_all_users():
     user_row = await User_List_Pydantic.from_queryset(User.all())
     if user_row:

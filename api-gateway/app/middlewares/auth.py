@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import Response, request, g, redirect
+from flask import Response, request, g, redirect, flash
 
 from services.requests import post
 
