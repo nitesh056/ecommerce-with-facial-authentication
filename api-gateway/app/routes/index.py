@@ -1,10 +1,8 @@
 from flask import Blueprint, request, render_template, g, Response
 import requests
-import cv2
 
 from middlewares.auth import get_user_info_middleware
 from services.requests import get, post
-from services.camera import run_frame
 
 index_router = Blueprint('index', __name__, url_prefix='/')
 
@@ -32,6 +30,11 @@ def showNewArrival():
 def showBrand():
     response, status_success = get('PRODUCT_URL', '/brand')
     return render_template('product/brand-list.html', brands=response['brands'])
+
+@index_router.route('/product/<product_id>')
+def showProduct(product_id):
+    response, status_success = get('PRODUCT_URL', '/product/'+ str(product_id))
+    return render_template('product/product.html', product=response)
 
 @index_router.route('/search-by-brand/<brand_name>')
 def showProductsByBrand(brand_name):
@@ -69,17 +72,17 @@ def get_notifications():
     
 
 
-def gen():
-    cap = cv2.VideoCapture(0)
-    while True:
-        try:        
-            video_frame = run_frame(cap)
-            yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + video_frame + b'\r\n\r\n')
-        except:
-            cap.release()
-            cap = cv2.VideoCapture(0)
+# def gen():
+#     cap = cv2.VideoCapture(0)
+#     while True:
+#         try:        
+#             video_frame = run_frame(cap)
+#             yield (b'--frame\r\n'
+#                 b'Content-Type: image/jpeg\r\n\r\n' + video_frame + b'\r\n\r\n')
+#         except:
+#             cap.release()
+#             cap = cv2.VideoCapture(0)
 
 @index_router.route('/video-feed/capture-face')
 def captureFace():
-    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return "asdf"

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Products{% endblock %}
+
+{% block body %}
+<div class="super_container" style="padding-top: 92px; min-height: 86vh;">
+    <div class="single_product">
+        <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+            <div class="row">
+                <div class="col-md-2 order-lg-1 order-2"></div>
+                <div class="col-md-4 order-lg-2 order-1">
+                    <div class="image_selected"><img src="{{ url_for('static', filename='images/products/'+ product.image) }}" alt=""></div>
+                </div>
+                <div class="col-md-4 order-3">
+                    <div class="product_description">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="/search-by-brand/{{ product.brand.id }}">{{ product.brand.name }}</a></li>
+                            </ol>
+                        </nav>
+                        <div class="product_name">{{ product.name }}</div>
+                        <div> <span class="product_price">NPR {{ product.current_price }}</span> <strike class="product_discount"> <span style='color:black'>NPR {{ product.old_price }}<span> </strike> </div>
+                        
+                        <hr class="singleline">
+                        <div> <span class="product_info">{{ product.description|safe }}</span> </div>
+                        <div class="col-xs-6"> <button type="button" class="btn btn-primary shop-button" onclick='addToCart("{{product.id}}")'>Add to Cart</button></div>
+                    </div>
+                </div>
+                <div class="col-md-2 order-lg-4"></div>
+            </div>
+            <div class="row row-underline">
+                <div class="col-md-6"> <span class=" deal-text">Specifications</span> </div>
+                <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a> </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ product.features|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
