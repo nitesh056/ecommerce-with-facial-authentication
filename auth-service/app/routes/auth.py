@@ -18,6 +18,7 @@ from services.user import (
     verify_password,
     get_all_users,
     change_user_role,
+    add_upload_folder,
     edit_user
 )
 from services.errors import EntityDoesNotExist
@@ -129,6 +130,22 @@ async def editRole(
         )
     
     return "role changed"
+
+
+@router.put("/uploadFolder/{user_id}", name="auth:Change User upload folder")
+async def editUploadFolder(
+    user_id,
+    user_edit=Body(..., embed=True, alias="folderName")
+):
+    try:
+        user = await add_upload_folder(user_id, user_edit)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="error while editing user",
+        )
+
+    return "folder name added"
 
 
 @router.put("/edit/{user_id}", name="auth:Edit User")

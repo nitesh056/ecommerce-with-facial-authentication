@@ -74,7 +74,8 @@ def signup():
                 'password': request.form['password'],
                 'phone_number': request.form['phone_number'],
                 'role': "user",
-                'status': "active"
+                'status': "inactive",
+                'upload_folder': ""
             }
         })
 
