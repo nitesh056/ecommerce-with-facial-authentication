@@ -6,3 +6,4 @@ __pycache__
 db.sqlite3
 db.sqlite3-shm
 db.sqlite3-wal
+face-recognition-service/dataset/images/*

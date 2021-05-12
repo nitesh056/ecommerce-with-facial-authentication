@@ -1,18 +1,24 @@
-from fastapi import FastAPI
-import uvicorn
-from tortoise.contrib.fastapi import register_tortoise
+from flask import Flask
+import os
 
-from routes.api import router as api_router
+from routes.routes import register_blueprints
 
-def get_application() -> FastAPI:
-    application = FastAPI()
+def get_application():
+    application = Flask(__name__)
 
-    application.include_router(api_router, prefix='/api')
+    application.secret_key = os.environ.get("SECRET_KEY", "hh&H*hf7&#(3usudo#*isduf")
+
+    application.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
+    
+    register_blueprints(application)
 
     return application
 
 app = get_application()
 
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8004, reload=True, log_level="info")
+if __name__ == '__main__':
+    app.run(
+        host=os.environ.get("HOST", "0.0.0.0"),
+        port=os.environ.get("PORT", 8004),
+        debug=os.environ.get("DEBUG", True)
+        )

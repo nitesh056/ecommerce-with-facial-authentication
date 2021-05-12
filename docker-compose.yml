@@ -29,14 +29,14 @@ services:
     ports:
       - "8003:8003"
     
-  face-recognition-service:
-    build: ./face-recognition-service
-    volumes:
-      - ./face-recognition-service:/usr/src/app
-    ports:
-      - "8004:8004"
-    depends_on: 
-      - auth-service
+  # face-recognition-service:
+  #   build: ./face-recognition-service
+  #   volumes:
+  #     - ./face-recognition-service:/usr/src/app
+  #   ports:
+  #     - "8004:8004"
+  #   depends_on: 
+  #     - auth-service
 
   api-gateway:
     build: ./api-gateway
@@ -49,5 +49,5 @@ services:
       - product-service
       - transaction-service
       - notification-service
-      - face-recognition-service
+      # - face-recognition-service
 
