@@ -54,3 +54,9 @@ async def change_user_role(user_id, user_edit):
     user.role = user_edit['role']
     await user.save()
     return "success"
+
+async def add_upload_folder(user_id, folder_name):
+    user = await User.get_or_none(id=user_id)
+    user.upload_folder = folder_name
+    await user.save()
+    return "success"
