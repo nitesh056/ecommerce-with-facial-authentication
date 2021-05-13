@@ -12,24 +12,34 @@ index_router = Blueprint('index', __name__, url_prefix='/')
 
 @index_router.route('/')
 def index():
-    return """<img id="myImg" src='http://127.0.0.1:8004/video-feed/capture-face/second'>"""
-    # <div id="demo">check here</div>
-    # <script>
-    # (function() {
-    #     setInterval(function(){
-    #         console.log("jaksdjfk");
-    #         var x = document.getElementById("myImg").width;
+    return """<img id="myImg" src='http://127.0.0.1:8004/video-feed/capture-face/second'>
+    <div id="demo">check here</div>
+    <script>
+    (function() {
+        setInterval(function(){
+            console.log("jaksdjfk");
+            var x = document.getElementById("myImg").width;
             
-    #         document.getElementById("demo").innerHTML = x;
-    #     }, 500);
-    # })();
-    # </script>
-    # """
+            document.getElementById("demo").innerHTML = x;
+        }, 500);
+    })();
+    </script>
+    """
 
 @index_router.route('/auth')
 def auth():
-    return "<img src='http://127.0.0.1:8004/video-feed/auth/seconad'>"
-
+    return """<img id='myImg' src='http://127.0.0.1:8004/video-feed/auth/second'>
+    <div id="demo">check here</div>
+    <script>
+    (function() {
+        setInterval(function(){
+            var x = document.getElementById("myImg").width;
+            var y = document.getElementById("myImg").height;
+            document.getElementById("demo").innerHTML = x + ", " + y;
+        }, 500);
+    })();
+    </script>
+    """
 
 @index_router.route('/video-feed/capture-face/<username>')
 def captureFace(username):

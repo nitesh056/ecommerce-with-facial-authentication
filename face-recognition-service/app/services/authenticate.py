@@ -18,31 +18,29 @@ class FacialAuth():
     def __init__(self, username):
         self.count = 1
 
+        self.username = username
         self.user_index = -1
         for folder_name in glob('dataset/images/train/*'):
             if username == folder_name[23:]: self.user_index = int(folder_name[21:23]) - 1
         
-        # self.face_classifier = cv2.CascadeClassifier('dataset/haarcascade_frontalface_default.xml')
-        # self.model = load_model('model/facefeatures_new_model.h5')
+        self.face_classifier = cv2.CascadeClassifier('dataset/haarcascade_frontalface_default.xml')
+        self.model = load_model('model/facefeatures_new_model.h5')
 
         self.cap = cv2.VideoCapture(0)
 
 
     def auth(self):
+        if self.user_index < 0: return showMessage("Dataset not found for this user")
         while True:
             # try:
-            if self.user_index < -1: return
-                pass
-            return (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + self.get_frame() + b'\r\n\r\n')
+                
 
-            # if self.count <= 10:
-            # else:
-            #     if not self.model_created:
-            #         self.cap.release()
-            #         yield showMessage("Capturing Completed!!-Creating model-Please wait...")
-            #         self.model_created = create_model()
-            #     yield showMessage("Model Created Successfully!!-Reload this page to see the changes")
+            if self.count <= 10:
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + self.get_frame() + b'\r\n\r\n')
+            else:
+                self.cap.release()
+                yield showMessage("Authentication completed-Redirecting...", (480, 700))
             # except:
             #     self.cap.release()
             #     self.cap = cv2.VideoCapture(0)
@@ -53,22 +51,24 @@ class FacialAuth():
         face = face_extractor(frame, self.face_classifier)
 
         if face is None: return img_to_bytes(frame, "Face not detected")
- 
+    
+        try:
+            name = self.check_face(face)
+        except:
+            name = "Unknown person"
+
+        return img_to_bytes(frame, name)
+
+    def check_face(self, face):
         face = cv2.resize(face, (224, 224))
         im = Image.fromarray(face, 'RGB')
         
         img_array = np.array(im)
         img_array = np.expand_dims(img_array, axis=0)
         pred = self.model.predict(img_array)
+        
+        if(int(pred[0][self.user_index] * 100000) == 100000):
+            self.count += 1
+            return self.username
 
-        name="Name"
-        
-        if(int(pred[0][0] * 100000) == 100000):
-            name+='Nitesh'
-        if(int(pred[0][1] * 100000) == 100000):
-            name+='second'
-        if(int(pred[0][2] * 100000) == 100000):
-            name+='unknown'
-        
-        
-        return img_to_bytes(frame, name) 
+        return "Unknown person"

@@ -19,8 +19,12 @@
 				</ul>
 			</div>
 			<div class="modal-footer right">
+				{% if checkout.status == 'pending' %}
 				<a href="/admin/checkout/accept/{{checkout.id}}" class="btn btn-success right">Approve</a>
 				<a href="/admin/checkout/reject/{{checkout.id}}" class="btn btn-danger">Reject</a>
+				{% else %}
+                                {{checkout.status}}
+                              {% endif %}
 			</div>
 		</div>
 		<!-- /.modal-content -->

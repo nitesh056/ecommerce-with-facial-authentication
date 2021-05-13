@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-def showMessage(text, frame_size=(500, 700)):
+def showMessage(text, frame_size=(480, 640)):
     img = np.ones(frame_size) * 255
 
     text_offset_y = 50

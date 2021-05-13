@@ -101,6 +101,43 @@ def signup():
 def checkAuth():
     return render_template('auth/nav-auth.html', user=g.user)
 
+@auth_router.route('/save-face/', methods=['GET'])
+@get_user_info_middleware
+def scanFace():
+    return render_template('auth/camera.html', user=g.user)
+
+
+
+@auth_router.route('/auth-with-face/<email>', methods=['POST'])
+@no_auth_middleware
+def authWithFace(email):
+    response, status_success = put('AUTH_URL', '/u/check-email/', {
+        'email': email
+    })
+    if status_success:
+        return render_template('auth/authenticate-face.html', user=response)
+
+    return response['detail']
+
+@auth_router.route('/auth-with-face/confirm/<email>', methods=['GET'])
+@no_auth_middleware
+def confirmAuthWithFace(email):
+    if request.method == 'GET':
+        response, status_success = put('AUTH_URL', '/u/check-email/confirm', {
+            'email': email
+        })
+        
+        if status_success:
+            resp = make_response(redirect('/'))
+            resp.set_cookie('token', response['token'])
+            return resp
+        else:
+            return render_template('auth/login.html', payload={
+                "email": request.form['email'],
+                "auth_error_message": response['detail']
+            })
+
+        return render_template('auth/login.html')
 
 @auth_router.route('/logout', methods=['GET'])
 def logout():

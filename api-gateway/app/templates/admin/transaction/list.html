@@ -23,7 +23,6 @@
                   <thead>
                   <tr>
                     <th>Invoice ID</th>
-                    <th>Created By</th>
                     <th>Invoice Date</th>
                     <th>Grand Total</th>
                     <th>Action</th>
@@ -33,7 +32,6 @@
                       {% for invoice in invoices %}
                         <tr>
                             <td>{{invoice.id}}</td>
-                            <td>{{invoice.created_by}}</td>
                             <td>{{invoice.invoice_date}}</td>
                             <td>{{invoice.grand_total}}</td>
                             <td>

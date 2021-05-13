@@ -1,6 +1,7 @@
 import cv2
 import os
 from glob import glob
+import requests
 
 from services.misc import img_to_bytes, face_extractor, showMessage
 from services.model import create_model
@@ -8,6 +9,7 @@ from services.model import create_model
 class Capture():
     def __init__(self, username):
         self.count = 1
+        self.username = username
         self.user_folder = ("0" + str(len(glob('dataset/images/train/*'))))[-2:] + username
         self.face_classifier = cv2.CascadeClassifier('dataset/haarcascade_frontalface_default.xml')
         self.model_created = False
@@ -19,19 +21,26 @@ class Capture():
     def capture_face(self):
         while True:
             # try:
-
             if self.count <= 100:
                 yield (b'--frame\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + self.get_frame() + b'\r\n\r\n')
             else:
-                if not self.model_created:
-                    self.cap.release()
-                    yield showMessage("Capturing Completed!!-Creating model-Please wait...")
-                    self.model_created = create_model()
-                yield showMessage("Model Created Successfully!!-Reload this page to see the changes")
+                break;
             # except:
             #     self.cap.release()
             #     self.cap = cv2.VideoCapture(0)
+        while True:
+            if not self.model_created:
+                self.cap.release()
+                yield showMessage("Capturing Completed!!-Creating model-Please wait...")
+                yield showMessage("Capturing Completed!!-Creating model-Please wait...")
+                self.model_created = create_model()
+            else:
+                yield showMessage("Model Created Successfully!!-Reload this page to see the changes", (480, 700))
+                r = requests.put("http://127.0.0.1:8000/api/u/uploadFolder/" + self.username, json={
+                    "folderName": self.user_folder
+                })
+                break;
 
 
     def get_frame(self):

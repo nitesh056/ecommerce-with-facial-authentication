@@ -8,8 +8,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-                <img src="{{ url_for('static', filename='images/web.png') }}" id="captureFace" width="100%" height="100%">
-                <!-- <img src="/video-feed/capture-face" id="captureFace" width="100%" height="100%"> -->
+                <!-- <img src="{{ url_for('static', filename='images/web.png') }}" id="captureFace" width="100%" height="100%"> -->
+                <img src="http://127.0.0.1:8004/video-feed/capture-face/{{ user.username }}" id="captureFace" width="100%" height="100%">
 			</div>
 		</div>
 		<!-- /.modal-content -->

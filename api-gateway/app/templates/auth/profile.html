@@ -21,7 +21,7 @@
                       <p class="text-muted font-size-sm">{{ user.phone_number }}</p>
                       {% if user.upload_folder %}
                       {% else %}
-                      <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#face-capture">Enable Facial Recognition</button>
+                      <button type="button" class="btn btn-info btn-xs" onclick="scanFace()">Enable Facial Recognition</button>
                       {% endif %}
                     </div>
                   </div>
@@ -89,6 +89,5 @@
           </div>
         </div>
     </div>
-    {% include 'auth/camera.html' %}
 {% endblock %}
 

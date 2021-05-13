@@ -132,13 +132,13 @@ async def editRole(
     return "role changed"
 
 
-@router.put("/uploadFolder/{user_id}", name="auth:Change User upload folder")
+@router.put("/uploadFolder/{user_name}", name="auth:Change User upload folder")
 async def editUploadFolder(
-    user_id,
+    user_name,
     user_edit=Body(..., embed=True, alias="folderName")
 ):
     try:
-        user = await add_upload_folder(user_id, user_edit)
+        user = await add_upload_folder(user_name, user_edit)
     except:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -147,6 +147,37 @@ async def editUploadFolder(
 
     return "folder name added"
 
+@router.put("/check-email", name="auth:Check Valid Email")
+async def checkEmail(
+    email=Body(..., embed=True, alias="email")
+):
+    try:
+        user_obj = await get_user_by_email(email=email)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="error while getting email",
+        )
+
+    return user_obj.username
+
+@router.put("/check-email/confirm", name="auth:Auth With Email")
+async def authWithEmail(
+    email=Body(..., embed=True, alias="email")
+):
+    try:
+        user_obj = await get_user_by_email(email=email)
+        
+        user = await User_Pydantic.from_tortoise_orm(user_obj)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=strings.INCORRECT_LOGIN_INPUT_1,
+        )
+
+    token = await create_access_token_for_user(user, "JWT_SECRET")
+
+    return UserWithToken(user=user, token=token)
 
 @router.put("/edit/{user_id}", name="auth:Edit User")
 async def editUser(

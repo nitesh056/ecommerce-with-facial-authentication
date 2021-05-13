@@ -44,13 +44,13 @@ async def getAll():
 
 @router.get("/p", name="invoice:all purchase invoice")
 async def getAllPurchase():
-    try:
-        all_invoices = await get_purchase_invoices()
-    except:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=strings.INVOICE_NOT_FOUND_IN_DATABASE,
-        )
+    # try:
+    all_invoices = await get_purchase_invoices()
+    # except:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_404_NOT_FOUND,
+    #         detail=strings.INVOICE_NOT_FOUND_IN_DATABASE,
+    #     )
     return ResponseInvoiceWithInvoiceItems(invoices=all_invoices.dict()['__root__'])
 
 

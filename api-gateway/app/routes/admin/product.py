@@ -2,12 +2,13 @@ from flask import Blueprint, request, render_template, redirect, flash
 from werkzeug.utils import secure_filename
 
 from services.requests import get, post, put, delete
-
+from middlewares.auth import admin_only_middleware
 
 product_router = Blueprint('product-admin', __name__, url_prefix='/admin/products')
 
 
 @product_router.route('/brands', methods=["GET", "POST"])
+@admin_only_middleware
 def manageBrand():
     if request.method == 'GET':
         response, status_success = get('PRODUCT_URL', '/brand/')
@@ -28,6 +29,7 @@ def manageBrand():
 
 
 @product_router.route('/brands/delete/<brand_id>', methods=["GET"])
+@admin_only_middleware
 def removeBrand(brand_id):
     if request.method == 'GET':
         response, status_success = delete('PRODUCT_URL', '/brand/' + str(brand_id))
@@ -35,6 +37,7 @@ def removeBrand(brand_id):
 
 
 @product_router.route('/', methods=["GET"])
+@admin_only_middleware
 def read():
     if request.method == 'GET':
         response, status_success = get('PRODUCT_URL', '/product/all')
@@ -42,6 +45,7 @@ def read():
 
 
 @product_router.route('/create', methods=["GET", "POST"])
+@admin_only_middleware
 def create():
     if request.method == 'POST':
         is_gaming_laptop = 1 if request.form.get('is_gaming_laptop') is not None else 0
@@ -85,6 +89,7 @@ def create():
 
 
 @product_router.route('/edit/<product_id>', methods=["GET", "POST"])
+@admin_only_middleware
 def edit(product_id):
     p_response, p_status_success = get('PRODUCT_URL', '/product/' + str(product_id))
     editing_error = False
@@ -134,6 +139,7 @@ def edit(product_id):
 
 
 @product_router.route('/delete/<product_id>', methods=["GET"])
+@admin_only_middleware
 def remove(product_id):
     if request.method == 'GET':
         response, status_success = delete('PRODUCT_URL', '/product/' + str(product_id))

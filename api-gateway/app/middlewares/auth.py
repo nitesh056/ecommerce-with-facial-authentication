@@ -70,7 +70,7 @@ def admin_only_middleware(func):
         })
 
         if status_success:
-            if response.user.role == 'admin':
+            if response['user']['role'] in ('admin', 'staff'):
                 g.user = response['user']
                 return func(*args, **kwargs)
             else:
